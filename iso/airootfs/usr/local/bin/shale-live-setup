@@ -1,0 +1,21 @@
+#!/bin/bash
+# Creates the passwordless "live" user for the live session.
+set -e
+id live >/dev/null 2>&1 || useradd -m -G wheel -s /bin/bash -c "Live User" live
+passwd -d live >/dev/null
+home=/home/live
+install -d -o live -g live "$home/Desktop" "$home/.config"
+install -m 755 -o live -g live /usr/share/applications/shale-installer.desktop "$home/Desktop/"
+# No screen lock or sleep in the live session.
+cat > "$home/.config/kscreenlockerrc" <<CFG
+[Daemon]
+Autolock=false
+LockOnResume=false
+CFG
+cat > "$home/.config/powerdevilrc" <<CFG
+[AC][SuspendAndShutdown]
+AutoSuspendAction=0
+[Battery][SuspendAndShutdown]
+AutoSuspendAction=0
+CFG
+chown live:live "$home/.config/kscreenlockerrc" "$home/.config/powerdevilrc"

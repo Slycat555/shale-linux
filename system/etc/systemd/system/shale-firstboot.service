@@ -1,0 +1,15 @@
+[Unit]
+Description=Shale Linux first-boot app setup
+Wants=network-online.target
+After=network-online.target NetworkManager.service
+ConditionPathExists=!/var/lib/shale/firstboot-done
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/shale/shale-firstboot
+Restart=on-failure
+RestartSec=120
+Nice=10
+
+[Install]
+WantedBy=multi-user.target

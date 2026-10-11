@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Install Shale Linux
+GenericName=System Installer
+Comment=Install Shale Linux on this computer
+Exec=shale-installer
+Icon=/usr/share/pixmaps/shale-logo.svg
+Terminal=false
+Categories=System;

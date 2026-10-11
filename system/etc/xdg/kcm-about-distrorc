@@ -1,0 +1,5 @@
+[General]
+Name=Shale Linux
+LogoPath=/usr/share/pixmaps/shale-logo.svg
+Website=https://github.com/Slycat555/shale-linux
+Variant=KDE Plasma

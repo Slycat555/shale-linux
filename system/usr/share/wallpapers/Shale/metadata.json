@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "Shale Linux" }],
+        "Id": "Shale",
+        "License": "CC-BY-SA-4.0",
+        "Name": "Shale"
+    }
+}

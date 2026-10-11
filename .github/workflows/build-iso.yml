@@ -1,0 +1,56 @@
+name: Build ISO
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          df -h /
+
+      - name: Build ISO in an Arch Linux container
+        run: |
+          sudo docker run --rm --privileged \
+            -v "$PWD":/work -w /work \
+            archlinux:latest \
+            bash -c 'pacman -Syu --noconfirm --needed archiso flatpak python && ./build.sh'
+          sudo chown -R "$(id -u):$(id -g)" out
+          cd out && sha256sum *.iso > SHA256SUMS && ls -lh
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shale-linux-iso
+          path: out/
+          compression-level: 0
+          retention-days: 14
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          iso=$(ls out/*.iso)
+          # GitHub release assets are limited to 2 GiB, so larger ISOs are split.
+          if [ "$(stat -c %s "$iso")" -gt 2000000000 ]; then
+            split -b 1900M -d "$iso" "$iso.part"
+            rm "$iso"
+            notes="The ISO is split into parts. Join them with: cat shalelinux-*.iso.part* > shalelinux.iso (Windows: copy /b part00+part01 shalelinux.iso). Then check it against SHA256SUMS."
+          else
+            notes="Write the ISO to a USB stick with Fedora Media Writer or balenaEtcher and boot from it."
+          fi
+          gh release create "$GITHUB_REF_NAME" out/* --title "Shale Linux $GITHUB_REF_NAME" --notes "$notes"

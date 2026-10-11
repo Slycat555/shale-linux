@@ -1,0 +1,6 @@
+// Live session only: the live user may perform admin actions (e.g. run the installer).
+polkit.addRule(function(action, subject) {
+    if (subject.user == "live") {
+        return polkit.Result.YES;
+    }
+});

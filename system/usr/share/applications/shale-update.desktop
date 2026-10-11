@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Software Update
+GenericName=Update your computer
+Comment=Install the latest updates for your system and apps
+Exec=shale-update
+Icon=system-software-update
+Terminal=false
+Categories=System;Settings;
+Keywords=update;upgrade;pacman;flatpak;

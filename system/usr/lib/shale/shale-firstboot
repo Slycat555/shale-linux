@@ -1,0 +1,23 @@
+#!/bin/bash
+# Installs the default Flatpak apps on first boot if they are missing (normally they
+# are copied from the installer USB stick, so this only runs as a fallback).
+# Keep this list in sync with FLATPAKS in src/shale/data.py.
+set -u
+APPS=(io.github.kolunmi.Bazaar org.mozilla.firefox)
+DONE=/var/lib/shale/firstboot-done
+
+for _ in $(seq 60); do
+    curl -fsS --max-time 5 -o /dev/null https://dl.flathub.org && break
+    sleep 10
+done
+
+flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || exit 1
+
+ok=1
+for app in "${APPS[@]}"; do
+    flatpak info --system "$app" >/dev/null 2>&1 && continue
+    flatpak install --system -y --noninteractive flathub "$app" || ok=0
+done
+
+[ "$ok" = 1 ] || exit 1
+mkdir -p "$(dirname "$DONE")" && touch "$DONE"
