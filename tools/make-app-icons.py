@@ -4,6 +4,8 @@
 Usage: make-app-icons.py LOGO.svg OUTDIR
   shale-update.svg     Software Update: an upward arrow cut out of the strata
   shale-snapshots.svg  Shale Snapshots: the logo with earlier copies fading behind it
+  shale-status-*.svg   Shale Snapshots' status badges (ok, warn, error): the snapshots
+                       icon with a coloured badge, used in the app's schedule page
 Shapes are combined with Qt path operations and written as plain filled paths, so
 Qt's SVG renderer (which ignores clipPath) draws them like everything else.
 """
@@ -78,9 +80,27 @@ def snapshots_icon(stripes):
     return out
 
 
+def status_icon(stripes, colour, glyph):
+    # The snapshots icon with a round badge in the bottom-right corner.
+    out = snapshots_icon(stripes)
+    out.append('<circle cx="99" cy="99" r="27" fill="#1b222b"/>')
+    out.append(f'<circle cx="99" cy="99" r="22" fill="{colour}"/>')
+    out.append(f'<path d="{glyph}" fill="none" stroke="#ffffff" stroke-width="6" '
+               'stroke-linecap="round" stroke-linejoin="round"/>')
+    return out
+
+
+STATUS = {
+    "shale-status-ok.svg": ("#3a9d68", "M89 99.5 L96 106.5 L109.5 92"),       # check
+    "shale-status-warn.svg": ("#d9952b", "M99 88 V101 M99 110 V110.2"),       # !
+    "shale-status-error.svg": ("#d14b4b", "M91 91 L107 107 M107 91 L91 107"),  # x
+}
+
 stripes = read_logo(sys.argv[1])
-for name, parts in (("shale-update.svg", update_icon(stripes)),
-                    ("shale-snapshots.svg", snapshots_icon(stripes))):
+icons = [("shale-update.svg", update_icon(stripes)),
+         ("shale-snapshots.svg", snapshots_icon(stripes))]
+icons += [(name, status_icon(stripes, colour, glyph)) for name, (colour, glyph) in STATUS.items()]
+for name, parts in icons:
     with open(os.path.join(sys.argv[2], name), "w", encoding="utf-8") as f:
         f.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">\n  '
                 + "\n  ".join(p for p in parts if p) + "\n</svg>\n")
