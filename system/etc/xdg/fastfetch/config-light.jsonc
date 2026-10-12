@@ -1,0 +1,51 @@
+// Shale Linux default: the Shale logo (made by tools/make-fastfetch-logo.py) next to
+// the system info in three groups, in darker slate for light terminals (Shale Light).
+// Used instead of config.jsonc in Shale Light terminals (see /usr/share/shale/bashrc).
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "file-raw",
+        "source": "/etc/xdg/fastfetch/shale-logo.txt",
+        "width": 32,
+        "height": 16,
+        "padding": { "top": 3, "left": 2, "right": 4 }
+    },
+    "display": {
+        "separator": "  ",
+        "key": { "width": 10 },
+        "color": {
+            "keys": "38;2;79;88;100",
+            "title": "38;2;35;38;41",
+            "output": "38;2;35;38;41"
+        },
+        "size": { "binaryPrefix": "iec", "ndigits": 1 },
+        "percent": { "color": { "green": "38;2;20;99;53", "yellow": "33", "red": "31" } }
+    },
+    "modules": [
+        { "type": "os", "key": "OS" },
+        { "type": "kernel", "key": "Kernel" },
+        { "type": "uptime", "key": "Uptime" },
+        { "type": "packages", "key": "Packages" },
+        { "type": "shell", "key": "Shell" },
+        { "type": "terminal", "key": "Terminal" },
+        "break",
+
+        { "type": "de", "key": "Desktop" },
+        { "type": "wm", "key": "Windows" },
+        { "type": "theme", "key": "Theme", "format": "{theme1}" },
+        { "type": "icons", "key": "Icons", "format": "{icons1}" },
+        { "type": "font", "key": "Font", "format": "{font1}" },
+        { "type": "display", "key": "Display", "compactType": "original-with-refresh-rate" },
+        "break",
+
+        { "type": "host", "key": "Machine" },
+        { "type": "cpu", "key": "CPU", "showPeCoreCount": true },
+        { "type": "gpu", "key": "GPU", "hideType": "integrated" },
+        { "type": "memory", "key": "Memory" },
+        { "type": "disk", "key": "Disk", "folders": "/" },
+        { "type": "battery", "key": "Battery" },
+        "break",
+
+        { "type": "colors", "symbol": "circle", "paddingLeft": 0 }
+    ]
+}
