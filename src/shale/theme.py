@@ -13,8 +13,10 @@ def _kde_colors():
     cfg.optionxform = str
     home = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
     try:
-        # Later files win: system defaults first, then the user's own settings.
-        cfg.read(["/etc/xdg/kdeglobals", os.path.join(home, "kdeglobals")], encoding="utf-8")
+        # Later files win: system defaults, then the global theme's defaults (Plasma keeps
+        # those in kdedefaults), then the user's own settings.
+        cfg.read(["/etc/xdg/kdeglobals", os.path.join(home, "kdedefaults", "kdeglobals"),
+                  os.path.join(home, "kdeglobals")], encoding="utf-8")
     except (configparser.Error, UnicodeDecodeError):
         pass
 
