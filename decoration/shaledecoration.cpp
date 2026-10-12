@@ -7,6 +7,7 @@
 
 #include <QPainter>
 #include <QPainterPath>
+#include <algorithm>
 #include <cmath>
 
 K_PLUGIN_FACTORY_WITH_JSON(ShaleDecorationFactory, "shaledecoration.json", registerPlugin<Shale::Decoration>();)
@@ -137,24 +138,39 @@ void Decoration::updateShadow()
 {
     auto shadow = s_shadow.lock();
     if (!shadow) {
-        // A soft, slightly downward shadow; KWin stretches the middle row and column.
-        const int size = 2 * ShadowSize + 1;
+        // A soft, slightly downward shadow. The image reaches CornerRadius px under the
+        // window so it also fills the gaps beside the rounded corners (KWin only draws
+        // shadows outside the window rectangle); the window's own shape is cut out.
+        // KWin stretches the middle row and column.
+        const int overlap = int(CornerRadius);
+        const int half = ShadowSize + overlap; // centre pixel = middle of the window
+        const int size = 2 * half + 1;
+        const qreal box = overlap + 0.5; // window half-size in this image
         QImage image(size, size, QImage::Format_ARGB32_Premultiplied);
         image.fill(Qt::transparent);
         const qreal sigma = ShadowSize / 2.6;
+        // Distance from (px, py) to a rounded box of half-size `box` and corner `radius`.
+        auto boxDistance = [box](qreal px, qreal py, qreal radius) {
+            const qreal qx = std::abs(px) - box + radius;
+            const qreal qy = std::abs(py) - box + radius;
+            const qreal outside = std::hypot(std::max(qx, 0.0), std::max(qy, 0.0));
+            return outside + std::min(std::max(qx, qy), 0.0) - radius;
+        };
         for (int y = 0; y < size; ++y) {
             for (int x = 0; x < size; ++x) {
-                const qreal dx = x - ShadowSize;
-                const qreal dy = y - ShadowSize - ShadowOffset;
-                const qreal d = std::sqrt(dx * dx + dy * dy);
-                const int alpha = qRound(255 * 0.38 * std::exp(-d * d / (2 * sigma * sigma)));
-                image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, alpha)));
+                const qreal px = x + 0.5 - (half + 0.5);
+                const qreal py = y + 0.5 - (half + 0.5);
+                const qreal d = std::max(boxDistance(px, py - ShadowOffset, CornerRadius), 0.0);
+                qreal alpha = 0.38 * std::exp(-d * d / (2 * sigma * sigma));
+                // Cut out the window itself, with a 1 px soft edge.
+                alpha *= std::clamp(boxDistance(px, py, CornerRadius) + 0.5, 0.0, 1.0);
+                image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, qRound(255 * alpha))));
             }
         }
         shadow = std::make_shared<KDecoration3::DecorationShadow>();
         shadow->setShadow(image);
         shadow->setPadding(QMarginsF(ShadowSize, ShadowSize, ShadowSize, ShadowSize));
-        shadow->setInnerShadowRect(QRectF(ShadowSize, ShadowSize, 1, 1));
+        shadow->setInnerShadowRect(QRectF(half, half, 1, 1));
         s_shadow = shadow;
     }
     setShadow(shadow);
