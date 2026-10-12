@@ -142,6 +142,7 @@ BrowserApplication=chromium.desktop
 contrast=4
 LookAndFeelPackage=org.shale.desktop
 widgetStyle=Breeze
+AnimationDurationFactor=0
 
 [WM]
 activeBackground=30,30,30
