@@ -98,6 +98,13 @@ p { margin: 0; }
 .undo-steps p { color: var(--soft); }
 .undo-steps b { color: var(--ink); font-weight: 600; display: block; }
 
+/* big screenshots */
+.big-shot { display: block; width: min(100%, 980px); height: auto; margin: 48px auto 0; }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; margin-top: 44px; }
+.pair figure { margin: 0; }
+.pair .caption { text-align: center; }
+@media (max-width: 700px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+
 /* familiar */
 .split.desk-split { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); }
 .desktop-shot { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--seam); box-shadow: 0 24px 60px rgb(0 0 0 / .45); }
@@ -263,18 +270,20 @@ footer .brand { color: var(--ink); }
   </section>
 
   <section class="section" id="undo">
-    <div class="wrap undo split">
-      <div class="stack">
-        <p class="kicker">Peace of mind</p>
-        <h2>Something went wrong? Go back in time.</h2>
-        <p class="lede">Shale quietly saves a copy of your system every day and right before every update. If something stops working, you can put everything back the way it was. Your photos and documents stay exactly where they are.</p>
-        <ol class="undo-steps" style="margin-top:8px">
+    <div class="wrap undo">
+      <div class="split">
+        <div class="stack">
+          <p class="kicker">Peace of mind</p>
+          <h2>Something went wrong? Go back in time.</h2>
+          <p class="lede">Shale quietly saves a copy of your system every day and right before every update. If something stops working, you can put everything back the way it was. Your photos and documents stay exactly where they are.</p>
+        </div>
+        <ol class="undo-steps">
           <li><span class="num">1</span><p><b>Open Shale Snapshots</b>It lists every saved copy with its date, like "Before update".</p></li>
           <li><span class="num">2</span><p><b>Pick a day when things worked</b>Choose the copy from before the problem started.</p></li>
           <li><span class="num">3</span><p><b>Click Restore and restart</b>Your computer comes back just as it was then.</p></li>
         </ol>
       </div>
-      <img class="shot" src="snapshots.png" width="1200" height="964" alt="Shale Snapshots listing three saved copies, including one made before an update, with the status Snapshots are on">
+      <img class="big-shot" src="snapshots.png" width="1200" height="964" alt="Shale Snapshots listing three saved copies, including one made before an update, with the status Snapshots are on">
     </div>
   </section>
 
@@ -293,15 +302,20 @@ footer .brand { color: var(--ink); }
   </section>
 
   <section class="section" style="padding-top:0">
-    <div class="wrap split">
-      <div class="stack">
-        <p class="kicker">Updates</p>
-        <h2>One click keeps everything up to date</h2>
-        <p class="lede">Open Software Update and click Update now. Your whole computer and every app update together, with a progress bar and no password to type.</p>
-        <p class="lede">A restore point is saved first, and you restart whenever it suits you.</p>
+    <div class="wrap">
+      <div class="split">
+        <div class="stack">
+          <p class="kicker">Updates</p>
+          <h2>One click keeps everything up to date</h2>
+        </div>
+        <div class="stack">
+          <p class="lede">Open Software Update and click Update now. Your whole computer and every app update together, with a progress bar and no password to type.</p>
+          <p class="lede">A restore point is saved first, and you restart whenever it suits you.</p>
+        </div>
       </div>
-      <div>
-        <img class="desktop-shot" src="update.jpg" width="1400" height="651" alt="The Software Update window saying Your computer is up to date, with a Done button">
+      <div class="pair">
+        <figure><img class="shot" src="update-ready.png" width="1100" height="702" alt="Software Update with the buttons Close and Update now"><figcaption class="caption">Click Update now…</figcaption></figure>
+        <figure><img class="shot" src="update-done.png" width="1100" height="702" alt="Software Update saying Your computer is up to date, with a Done button"><figcaption class="caption">…and you're up to date.</figcaption></figure>
       </div>
     </div>
   </section>

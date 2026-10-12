@@ -23,7 +23,7 @@ class Updater(QWidget):
         self.setFixedSize(520, 280)
 
         logo = QLabel()
-        logo.setPixmap(QIcon(theme.LOGO).pixmap(56, 56))
+        logo.setPixmap(QIcon.fromTheme("shale-update", QIcon(theme.LOGO)).pixmap(56, 56))
         self.title = theme.label("Software Update", wrap=False)
         self.title.setStyleSheet("font-size: 17pt; font-weight: 600;")
         self.status = theme.label("Keep your computer safe and up to date.", "subtitle")
