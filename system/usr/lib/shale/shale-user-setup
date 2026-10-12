@@ -6,6 +6,9 @@
 dir="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-4.0"
 mkdir -p "$dir"
 cp -f /usr/share/shale/gtk-4.0/shale-adwaita.css "$dir/shale-adwaita.css"
+# kde-gtk-config only writes colors.css when the colour scheme changes, so a new user
+# starts with Shale Dark's (otherwise every colour above is undefined: transparent apps).
+[ -s "$dir/colors.css" ] || cp /usr/share/shale/gtk-4.0/colors.css "$dir/colors.css"
 [ -f "$dir/gtk.css" ] || printf "@import 'colors.css';\n" > "$dir/gtk.css"
 [ -n "$(tail -c1 "$dir/gtk.css")" ] && echo >> "$dir/gtk.css"
 grep -q "shale-adwaita.css" "$dir/gtk.css" ||
