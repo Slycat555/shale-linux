@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <title>Shale Linux</title>
-<meta name="description" content="Shale Linux is a free, friendly computer system for people who are new to Linux. Install it from a USB stick and everything is ready to use.">
+<meta name="description" content="Shale Linux is a free, minimal and fast open source system for people who are new to Linux. Install it from a USB stick and everything is ready to use.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600&display=swap">
@@ -87,6 +87,8 @@ p { margin: 0; }
 .task { background: var(--raised); border: 1px solid var(--seam); border-radius: 18px; padding: 24px; display: grid; gap: 8px; align-content: start; }
 .task .ico { width: 52px; height: 52px; display: block; margin-bottom: 4px; }
 .app-ico { width: 64px; height: 64px; display: block; }
+.traits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.trait-ico { width: 30px; height: 30px; color: var(--mist); margin-bottom: 6px; }
 .task p { color: var(--soft); }
 .task .app { margin-top: 6px; font-size: 0.88rem; }
 .task .app b { color: var(--ink); font-weight: 600; }
@@ -162,11 +164,11 @@ footer .brand { color: var(--ink); }
   .hero-in, .split, .split.wide-pic, .split.desk-split, .curious .wrap, .need { grid-template-columns: minmax(0, 1fr); }
   .hero-in { padding-block: 24px 190px; }
   .hero-mark { width: 180px; justify-self: start; grid-row: 1; }
-  .everyday, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .everyday, .steps, .traits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section { padding-block: 64px; }
 }
 @media (max-width: 560px) {
-  .everyday, .steps { grid-template-columns: minmax(0, 1fr); }
+  .everyday, .steps, .traits { grid-template-columns: minmax(0, 1fr); }
   .nav ul { display: none; }
   .mock .win { grid-template-columns: 90px minmax(0, 1fr); }
   .mock .main { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -204,15 +206,15 @@ footer .brand { color: var(--ink); }
     <div class="hero-in">
       <div>
         <h1>A calm, friendly home for your computer</h1>
-        <p class="lede">Shale is a free system for your PC, like Windows or macOS. Install it once and everything is ready: your browser, office apps, music and games. No tech skills needed.</p>
+        <p class="lede">Shale is a free, open source system for your PC, like Windows or macOS, but slim and quick. Install it once and everything is ready: your browser, office apps, music and games. No tech skills needed.</p>
         <div class="cta">
           <a class="btn primary" href="#get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Get Shale, it's free</a>
           <a class="btn" href="#apps">See what's inside</a>
         </div>
         <ul class="reassure">
-          <li>Free, no account needed</li>
-          <li>No ads or tracking</li>
-          <li>Updates in one click</li>
+          <li>Free and open source</li>
+          <li>Light and fast</li>
+          <li>No ads, tracking or accounts</li>
         </ul>
       </div>
       <div class="hero-mark"><svg viewBox="0 0 128 128" role="img" aria-label="The Shale logo: soft grey layers of rock inside a circle"><use href="#shale-mark"/></svg></div>
@@ -222,6 +224,32 @@ footer .brand { color: var(--ink); }
 </header>
 
 <main>
+  <section class="section" id="light">
+    <div class="wrap">
+      <p class="kicker">Light by design</p>
+      <h2 style="margin-top:12px">Minimal, fast and open source</h2>
+      <p class="lede" style="margin-top:18px">Shale comes with what you need and nothing else, so your computer spends its power on you.</p>
+      <div class="traits">
+        <div class="task">
+          <svg class="trait-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12h6"/></svg>
+          <h3>Minimal</h3><p>A handful of good apps, no trial software, no clutter. Add anything else from Bazaar when you want it.</p>
+        </div>
+        <div class="task">
+          <svg class="trait-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"/></svg>
+          <h3>Slim</h3><p>Built on Arch Linux, which starts with almost nothing. Only what Shale needs runs in the background, leaving memory and storage for your things.</p>
+        </div>
+        <div class="task">
+          <svg class="trait-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h6l-1 8 8-10h-6l1-8z"/></svg>
+          <h3>Fast</h3><p>Windows open instantly with no animations to wait for. The desktop stays quick and smooth, even with lots of apps open.</p>
+        </div>
+        <div class="task">
+          <svg class="trait-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>
+          <h3>Open source</h3><p>Shale and every app it comes with are open for anyone to read, check and improve. Nothing hidden, nothing watching you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="apps">
     <div class="wrap split wide-pic">
       <div class="stack">
