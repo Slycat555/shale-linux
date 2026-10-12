@@ -99,6 +99,8 @@ p { margin: 0; }
 .undo-steps b { color: var(--ink); font-weight: 600; display: block; }
 
 /* familiar */
+.split.desk-split { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); }
+.desktop-shot { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--seam); box-shadow: 0 24px 60px rgb(0 0 0 / .45); }
 .mock { border-radius: 10px; overflow: hidden; background: #1e1e1e; box-shadow: 0 0 0 1px rgb(0 0 0 / .6), 0 22px 50px rgb(0 0 0 / .3); color: #e8ecf1; }
 .mock .bar { display: flex; height: 34px; align-items: stretch; font: 400 0.85rem/34px var(--body); }
 .mock .bar .t { flex: 1; padding-inline: 14px; color: #cfd6de; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -149,7 +151,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 footer .brand { color: var(--ink); }
 
 @media (max-width: 880px) {
-  .hero-in, .split, .split.wide-pic, .curious .wrap, .need { grid-template-columns: minmax(0, 1fr); }
+  .hero-in, .split, .split.wide-pic, .split.desk-split, .curious .wrap, .need { grid-template-columns: minmax(0, 1fr); }
   .hero-in { padding-block: 24px 190px; }
   .hero-mark { width: 180px; justify-self: start; grid-row: 1; }
   .everyday, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -276,17 +278,10 @@ footer .brand { color: var(--ink); }
   </section>
 
   <section class="section">
-    <div class="wrap split">
+    <div class="wrap split desk-split">
       <div>
-        <div class="mock" role="img" aria-label="A Shale window with minimize, maximize and close buttons on the right, above a taskbar with a start button">
-          <div class="bar"><div class="t">Home — Files</div>
-            <div class="b"><svg viewBox="0 0 10 10"><path d="M0 5.5h10"/></svg></div>
-            <div class="b"><svg viewBox="0 0 10 10"><rect x=".5" y=".5" width="9" height="9" rx="1"/></svg></div>
-            <div class="b x"><svg viewBox="0 0 10 10"><path d="M0 0l10 10M10 0L0 10"/></svg></div>
-          </div>
-          <div class="win"><div class="side"><i></i><i></i><i></i><i></i></div><div class="main"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-          <div class="taskbar"><svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg><i></i><i></i><i></i><span class="clock">8:45 PM</span></div>
-        </div>
+        <img class="desktop-shot" src="desktop.jpg" width="1920" height="1080" alt="The Shale desktop: the Bazaar app store showing its colourful categories and the Calculator, over the grey layered wallpaper, with the taskbar and start button along the bottom">
+        <p class="caption">The Shale desktop, with Bazaar and Calculator open.</p>
       </div>
       <div class="stack">
         <p class="kicker">Feels familiar</p>
