@@ -9,6 +9,7 @@ FLATHUB_REPO = "https://dl.flathub.org/repo/flathub.flatpakrepo"
 # to the new system, so they work without an internet connection.
 FLATPAKS = [
     "io.github.kolunmi.Bazaar",  # app store
+    "org.localsend.localsend_app",  # send files to nearby phones and computers
 ]
 
 # Kernel options for a quiet, logo-free boot straight into the desktop.
@@ -30,6 +31,8 @@ BASE_PACKAGES = [
     "bluez", "bluez-utils", "cups",
     # Flatpak
     "flatpak",
+    # Shale Snapshots (Timeshift fork) and its scheduler
+    "cronie", "vte3", "libgee", "json-glib", "psmisc",
     # Fonts
     "noto-fonts", "noto-fonts-emoji", "noto-fonts-cjk", "ttf-liberation",
 ]
@@ -70,7 +73,7 @@ SERVICES = [
     "NetworkManager.service", "sddm.service", "bluetooth.service",
     "cups.socket", "fstrim.timer", "paccache.timer",
     "systemd-timesyncd.service", "power-profiles-daemon.service",
-    "shale-firstboot.service",
+    "shale-firstboot.service", "cronie.service",
 ]
 
 # (label, locale)

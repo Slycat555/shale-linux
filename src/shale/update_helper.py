@@ -1,6 +1,7 @@
 """Root helper for the Shale updater.
 
-Updates Arch packages and system Flatpaks, printing JSON-lines progress:
+Takes a restore point with Shale Snapshots, then updates Arch packages and system
+Flatpaks, printing JSON-lines progress:
     {"type": "step", "text": "...", "detail": "...", "progress": 0.4}
     {"type": "done", "restart": true, "changed": true}
     {"type": "error", "text": "..."}
@@ -34,6 +35,15 @@ def stream(cmd, on_line):
             if line:
                 on_line(line)
     return proc.wait()
+
+
+def snapshots_enabled():
+    """True if Shale Snapshots is set up with a backup disk."""
+    try:
+        with open("/etc/timeshift/timeshift.json", encoding="utf-8") as f:
+            return bool(json.load(f).get("backup_device_uuid"))
+    except (OSError, ValueError):
+        return False
 
 
 def clear_stale_lock():
@@ -80,6 +90,13 @@ def main():
                 return
             if "downloading" in line or line.endswith(".pkg.tar.zst"):
                 emit("step", "Downloading updates…", detail=line.split()[0])
+
+        if snapshots_enabled() and subprocess.run(["pacman", "-Qqu"], capture_output=True).stdout.strip():
+            # A restore point first, so a bad update can be rolled back in Shale Snapshots.
+            # Tagged daily, so Shale Snapshots' own retention cleans old ones up.
+            emit("step", "Creating a restore point…", progress=0.05)
+            stream(["timeshift", "--create", "--scripted", "--tags", "D",
+                    "--comments", "Before update"], lambda l: None)
 
         rc = stream(["pacman", "-Su", "--noconfirm"], on_pacman)
         if rc != 0:

@@ -1,0 +1,4 @@
+[submodule "snapshots"]
+	path = snapshots
+	url = ../shale-snapshots
+	branch = shale

@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Free disk space
         run: |
@@ -27,7 +29,7 @@ jobs:
           sudo docker run --rm --privileged \
             -v "$PWD":/work -w /work \
             archlinux:latest \
-            bash -c 'pacman -Syu --noconfirm --needed archiso flatpak python base-devel cmake extra-cmake-modules kdecoration && ./build.sh'
+            bash -c 'pacman -Syu --noconfirm --needed archiso flatpak python base-devel cmake extra-cmake-modules kdecoration meson vala vte3 libgee json-glib && ./build.sh'
           sudo chown -R "$(id -u):$(id -g)" out
           cd out && sha256sum *.iso > SHA256SUMS && ls -lh
 

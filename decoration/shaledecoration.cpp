@@ -21,6 +21,8 @@ constexpr qreal ButtonWidth = 46;
 constexpr qreal GlyphSize = 10;
 constexpr qreal TitleMargin = 12;
 constexpr qreal CornerRadius = 8;
+constexpr qreal FrameWidth = 1;
+const QColor FrameColor(0, 0, 0, 200); // thin dark frame, never a light one
 constexpr int ShadowSize = 28;
 constexpr int ShadowOffset = 4; // the shadow reaches further below the window than above
 const QColor CloseHover(0xc4, 0x2b, 0x1c);
@@ -111,23 +113,23 @@ void Decoration::updateLayout()
     const bool maximized = isMaximized();
     const qreal radius = maximized ? 0 : CornerRadius;
 
-    setBorders(QMarginsF(0, TitleBarHeight, 0, 0));
+    const qreal frame = maximized ? 0 : FrameWidth;
+    setBorders(QMarginsF(frame, TitleBarHeight, frame, frame));
     setResizeOnlyBorders(maximized ? QMarginsF() : QMarginsF(6, 6, 6, 6));
-    setTitleBar(QRectF(0, 0, width, TitleBarHeight));
+    setTitleBar(QRectF(frame, frame, width, TitleBarHeight - frame));
     setBorderRadius(KDecoration3::BorderRadius(radius));
-    // A thin dark frame (never a light one), like Windows 11 in dark mode.
-    setBorderOutline(maximized ? KDecoration3::BorderOutline()
-                               : KDecoration3::BorderOutline(1, QColor(0, 0, 0, 170), KDecoration3::BorderRadius(radius)));
+    // KWin's own outline came out pure white, so the frame is painted in paint().
+    setBorderOutline(KDecoration3::BorderOutline());
 
     const QSignalBlocker blockLeft(m_leftButtons);
     const QSignalBlocker blockRight(m_rightButtons);
     for (auto *group : {m_leftButtons, m_rightButtons}) {
         for (auto *button : group->buttons()) {
-            button->setGeometry(QRectF(0, 0, ButtonWidth, TitleBarHeight));
+            button->setGeometry(QRectF(0, 0, ButtonWidth, TitleBarHeight - frame));
         }
     }
-    m_leftButtons->setPos(QPointF(0, 0));
-    m_rightButtons->setPos(QPointF(width - m_rightButtons->geometry().width(), 0));
+    m_leftButtons->setPos(QPointF(frame, frame));
+    m_rightButtons->setPos(QPointF(width + frame - m_rightButtons->geometry().width(), frame));
     update();
 }
 
@@ -160,18 +162,27 @@ void Decoration::updateShadow()
 
 void Decoration::paint(QPainter *painter, const QRectF &repaintArea)
 {
-    const QRectF bar(0, 0, window()->width(), TitleBarHeight);
-    const QPainterPath path = titleBarPath(bar, isMaximized() ? 0 : CornerRadius);
+    const bool maximized = isMaximized();
+    const qreal frame = maximized ? 0 : FrameWidth;
+    const qreal radius = maximized ? 0 : CornerRadius;
+    const QRectF bar(frame, frame, window()->width(), TitleBarHeight - frame);
+    const QPainterPath path = titleBarPath(bar, qMax<qreal>(radius - frame, 0));
 
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setPen(Qt::NoPen);
+    if (frame > 0) {
+        // The frame: the whole window shape in the frame colour; the title bar and
+        // the window contents cover everything but its 1 px edge.
+        painter->setBrush(FrameColor);
+        painter->drawRoundedRect(rect(), radius, radius);
+    }
     painter->setBrush(titleBarColor());
     painter->drawPath(path);
     painter->setClipPath(path);
 
     // Title: left-aligned like Windows, after any left-hand buttons.
-    const qreal left = m_leftButtons->buttons().isEmpty() ? TitleMargin : m_leftButtons->geometry().right() + 4;
+    const qreal left = m_leftButtons->buttons().isEmpty() ? frame + TitleMargin : m_leftButtons->geometry().right() + 4;
     const qreal right = m_rightButtons->geometry().left() - TitleMargin;
     if (right > left) {
         QColor text = foregroundColor();
@@ -180,7 +191,7 @@ void Decoration::paint(QPainter *painter, const QRectF &repaintArea)
         }
         painter->setFont(settings()->font());
         painter->setPen(text);
-        const QRectF titleRect(left, 0, right - left, TitleBarHeight);
+        const QRectF titleRect(left, frame, right - left, TitleBarHeight - frame);
         const QString caption = painter->fontMetrics().elidedText(window()->caption(), Qt::ElideRight, int(titleRect.width()));
         painter->drawText(titleRect, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextSingleLine, caption);
     }

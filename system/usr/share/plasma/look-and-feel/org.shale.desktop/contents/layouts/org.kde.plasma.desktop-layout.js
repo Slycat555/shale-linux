@@ -18,6 +18,17 @@ panel.height = 2 * Math.ceil(gridUnit * 2.5 / 2);
 var kickoff = panel.addWidget("org.kde.plasma.kickoff");
 kickoff.currentConfigGroup = ["General"];
 kickoff.writeConfig("icon", "/usr/share/pixmaps/shale-logo.svg");
+kickoff.writeConfig("favorites", [
+    "preferred://browser",
+    "org.kde.dolphin.desktop",
+    "org.kde.konsole.desktop",
+    "io.github.kolunmi.Bazaar.desktop",
+    "org.localsend.localsend_app.desktop",
+    "libreoffice-writer.desktop",
+    "systemsettings.desktop",
+    "shale-update.desktop",
+    "timeshift-gtk.desktop"
+].join(","));
 panel.addWidget("org.kde.plasma.pager");
 
 var tasks = panel.addWidget("org.kde.plasma.icontasks");

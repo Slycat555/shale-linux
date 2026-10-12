@@ -76,6 +76,11 @@ xdg-desktop-portal-kde
 dolphin
 konsole
 fastfetch
+cronie
+vte3
+libgee
+json-glib
+psmisc
 kate
 partitionmanager
 spectacle

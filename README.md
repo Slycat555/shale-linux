@@ -13,7 +13,8 @@ Boot the USB stick, click through a short installer and you get a complete deskt
 | **Graphics** | AMD by default (Mesa + RADV Vulkan, 32-bit libraries for games). Intel and NVIDIA are detected and offered automatically. |
 | **Audio** | PipeWire (with PulseAudio, ALSA and JACK compatibility) |
 | **Bluetooth** | Enabled and switched on automatically |
-| **Apps** | Flatpak + Flathub out of the box, plus **[Bazaar](https://github.com/kolunmi/bazaar)** (app store), **LibreOffice**, **VLC**, **Gwenview** and **Chromium** |
+| **Apps** | Flatpak + Flathub out of the box, plus **[Bazaar](https://github.com/kolunmi/bazaar)** (app store), **LibreOffice**, **VLC**, **Gwenview**, **Chromium** and **[LocalSend](https://localsend.org)** |
+| **Snapshots** | **Shale Snapshots** ([our Timeshift fork](https://github.com/slycat555/shale-snapshots)): daily and boot snapshots of the system, plus one before every update, so you can roll back |
 | **Updates** | **Software Update** updates the system and all apps with one click and a progress bar. Admin users don't need a password. |
 | **Boot** | Silent: no boot menu, no scrolling text, no Arch logo. Just the computer maker's logo and a spinner. |
 | **Extras** | zram swap, printing, firmware updates (fwupd), optional full-disk encryption |
@@ -29,7 +30,7 @@ Under the hood it's plain Arch Linux, using the official Arch repositories. The 
 
 > ⚠ The installer uses the **whole disk** you choose and erases everything on it.
 
-Bazaar is copied from the USB stick. Everything else is downloaded fresh while installing, so an internet connection is required.
+Bazaar and LocalSend are copied from the USB stick. Everything else is downloaded fresh while installing, so an internet connection is required.
 
 ## How it's put together
 
@@ -62,7 +63,7 @@ The installer backend reads the user's choices as JSON on stdin and reports prog
 On Arch Linux:
 
 ```sh
-sudo pacman -S archiso flatpak base-devel cmake extra-cmake-modules kdecoration
+sudo pacman -S archiso flatpak base-devel cmake extra-cmake-modules kdecoration meson vala vte3 libgee json-glib
 sudo ./build.sh
 ```
 
@@ -70,7 +71,7 @@ The ISO appears in `out/`. On any other distro, use a privileged Arch container:
 
 ```sh
 sudo podman run --rm --privileged -v "$PWD":/work -w /work archlinux:latest \
-    bash -c 'pacman -Syu --noconfirm archiso flatpak python base-devel cmake extra-cmake-modules kdecoration && ./build.sh'
+    bash -c 'pacman -Syu --noconfirm archiso flatpak python base-devel cmake extra-cmake-modules kdecoration meson vala vte3 libgee json-glib && ./build.sh'
 ```
 
 GitHub Actions builds the ISO on every push to `main`. Pushing a tag like `v2026.10` publishes a release. The ISO is larger than GitHub's 2 GiB limit, so the release splits it into parts; instructions for joining them are in the release notes.

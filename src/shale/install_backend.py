@@ -376,6 +376,27 @@ class Installer:
                 shutil.copy2(path, dest, follow_symlinks=False)
         # From now on the shale-os-release pacman hook keeps this in place.
         shutil.copy2("/usr/share/shale/os-release", TARGET + "/usr/lib/os-release")
+        self.configure_snapshots()
+
+    def configure_snapshots(self):
+        """Shale Snapshots: daily and boot snapshots of the system (not /home) on the
+        root disk, so a bad update can be rolled back."""
+        with open("/etc/timeshift/default.json", encoding="utf-8") as f:
+            conf = json.load(f)
+        conf.update({
+            "backup_device_uuid": self.run(["blkid", "-s", "UUID", "-o", "value", self.root_dev],
+                                           quiet=True).strip(),
+            "parent_device_uuid": self.luks_uuid or "",
+            "do_first_run": "false",
+            "schedule_daily": "true", "count_daily": "5",
+            "schedule_boot": "true", "count_boot": "3",
+        })
+        self.write("/etc/timeshift/timeshift.json", json.dumps(conf, indent=2) + "\n")
+        cron = ("SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin\n"
+                'MAILTO=""\n\n')
+        self.write("/etc/cron.d/timeshift-hourly", cron + "0 * * * * root timeshift --check --scripted\n")
+        self.write("/etc/cron.d/timeshift-boot",
+                   cron + "@reboot root sleep 10m && timeshift --create --scripted --tags B\n")
 
     def configure_boot(self):
         hooks = ["base", "systemd", "plymouth", "autodetect", "microcode", "modconf",

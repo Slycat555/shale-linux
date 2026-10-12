@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds the Shale Linux ISO. Must run as root on Arch Linux (or in an Arch container
-# started with --privileged) with `archiso`, `flatpak` and the decoration's build
-# dependencies (`base-devel cmake extra-cmake-modules kdecoration`) installed.
+# started with --privileged) with `archiso`, `flatpak` and the build dependencies of the
+# decoration and Shale Snapshots installed (see .github/workflows/build-iso.yml).
 set -euo pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 
@@ -15,7 +15,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-rm -rf "$PROFILE" "$WORK"
+rm -rf "$PROFILE" "$WORK" build/snapshots build/snapshots-root
 mkdir -p build
 cp -a iso "$PROFILE"
 
@@ -31,6 +31,12 @@ cmake -S decoration -B build/decoration -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUIL
 cmake --build build/decoration
 DESTDIR="$PWD/$A" cmake --install build/decoration
 
+# Shale Snapshots, our Timeshift fork (the snapshots/ submodule).
+meson setup build/snapshots snapshots --prefix=/usr --sysconfdir=/etc --buildtype=release
+meson compile -C build/snapshots
+DESTDIR="$PWD/build/snapshots-root" meson install -C build/snapshots --no-rebuild
+cp -a build/snapshots-root/. "$A/"
+
 # The installer copies everything in this manifest to the new system.
 # (The installer itself is left out; it is only needed on the USB stick.)
 install -d "$A/usr/share/shale"
@@ -42,6 +48,7 @@ install -d "$A/usr/share/shale"
     done
     echo /usr/share/pixmaps/shale-logo.svg
     echo "$DECO_SO"
+    (cd build/snapshots-root && find . \( -type f -o -type l \) | sed 's|^\.||')
 } | sort > "$A/usr/share/shale/overlay-files"
 
 # 2. Live-only: start the installer when the live desktop appears.
