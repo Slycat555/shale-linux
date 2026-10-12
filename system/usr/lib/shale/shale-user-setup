@@ -20,6 +20,18 @@ rc="$HOME/.bashrc"
 grep -q "/usr/share/shale/bashrc" "$rc" ||
     printf '\n# Shale terminal prompt\n[ -r /usr/share/shale/bashrc ] && . /usr/share/shale/bashrc\n' >> "$rc"
 
+# Konsole has its own colours: match its profile to the Shale Dark/Darker colour scheme,
+# unless the user picked some other profile themselves.
+profile=$(kreadconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile)
+case "$profile" in
+    ""|Shale.profile|ShaleDarker.profile)
+        if [ "$(kreadconfig6 --file kdeglobals --group General --key ColorScheme)" = ShaleDarker ]; then
+            kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile ShaleDarker.profile
+        else
+            kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile Shale.profile
+        fi ;;
+esac
+
 # Bazaar must not linger in the background (and so in the system tray) after its
 # window is closed; Shale Update handles updates instead.
 flatpak permission-set background background io.github.kolunmi.Bazaar no 2>/dev/null
