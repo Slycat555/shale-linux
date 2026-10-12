@@ -4,8 +4,16 @@ on:
   push:
     branches: [main]
     tags: ["v*"]
+    # Website-only changes don't need a new ISO (website.yml publishes those).
+    paths-ignore: ["website/**"]
   pull_request:
+    paths-ignore: ["website/**"]
   workflow_dispatch:
+
+# A newer push to the same branch or tag replaces a build that is still running.
+concurrency:
+  group: build-iso-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
