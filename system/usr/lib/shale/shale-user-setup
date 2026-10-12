@@ -20,27 +20,8 @@ rc="$HOME/.bashrc"
 grep -q "/usr/share/shale/bashrc" "$rc" ||
     printf '\n# Shale terminal prompt\n[ -r /usr/share/shale/bashrc ] && . /usr/share/shale/bashrc\n' >> "$rc"
 
-# Konsole has its own colours: match its profile to the Shale Dark/Darker/Light colour
-# scheme, unless the user picked some other profile themselves.
-profile=$(kreadconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile)
-case "$profile" in
-    ""|Shale.profile|ShaleDarker.profile|ShaleLight.profile)
-        case "$(kreadconfig6 --file kdeglobals --group General --key ColorScheme)" in
-            ShaleDarker) want=ShaleDarker.profile ;;
-            ShaleLight) want=ShaleLight.profile ;;
-            *) want=Shale.profile ;;
-        esac
-        kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile "$want" ;;
-esac
-
-# The login screen can't know whose theme to show, so it follows whoever logged in last:
-# Shale's light wallpaper for a light colour scheme, the dark one otherwise.
-bg=$(kreadconfig6 --file kdeglobals --group Colors:Window --key BackgroundNormal)
-mode=$(echo "$bg" | awk -F, '{ print ($1 + $2 + $3 > 384) ? "light" : "dark" }')
-[ "$mode" = light ] && dir=images || dir=images_dark
-grep -q "^background=/usr/share/wallpapers/Shale/contents/$dir/" \
-    /usr/share/sddm/themes/breeze/theme.conf.user 2>/dev/null ||
-    pkexec /usr/lib/shale/shale-login-wallpaper "$mode" 2>/dev/null
+# The terminal and the login screen don't follow the colour scheme by themselves.
+/usr/lib/shale/shale-match-theme
 
 # Bazaar must not linger in the background (and so in the system tray) after its
 # window is closed; Shale Update handles updates instead.

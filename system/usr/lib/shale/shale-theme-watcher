@@ -1,0 +1,10 @@
+#!/bin/sh
+# Runs shale-match-theme whenever the KDE colour scheme changes, so the terminal and the
+# login screen follow a new theme straight away instead of at the next login.
+# Started at login by /etc/xdg/autostart/shale-theme-watcher.desktop.
+dbus-monitor --session "type='signal',interface='org.kde.KGlobalSettings',member='notifyChange'" 2>/dev/null |
+while read -r line; do
+    case "$line" in
+        *member=notifyChange*) /usr/lib/shale/shale-match-theme ;;
+    esac
+done
