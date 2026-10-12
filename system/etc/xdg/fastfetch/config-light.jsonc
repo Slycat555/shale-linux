@@ -1,6 +1,6 @@
 // Shale Linux default: the Shale logo (made by tools/make-fastfetch-logo.py) next to
-// the system info in three groups, in darker slate for light terminals (Shale Light).
-// Used instead of config.jsonc in Shale Light terminals (see /usr/share/shale/bashrc).
+// the system info in three groups, in darker slate for light terminals.
+// Used instead of config.jsonc in light terminals (see /usr/share/shale/bashrc).
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {

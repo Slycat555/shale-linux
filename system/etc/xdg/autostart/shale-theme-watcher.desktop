@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Shale theme watcher
+Exec=/usr/lib/shale/shale-theme-watcher
+OnlyShowIn=KDE;
+NoDisplay=true
+X-KDE-autostart-phase=2

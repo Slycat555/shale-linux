@@ -1,0 +1,93 @@
+#!/bin/sh
+# Matches the parts of the desktop that don't follow the KDE colour scheme by themselves:
+#  - the terminal: the "Shale Theme" Konsole profile takes the window title bar's colours, with
+#    readable text colours for a dark or light background;
+#  - the login screen: Shale's light or dark wallpaper.
+# Run at login by shale-user-setup and whenever the colour scheme changes by
+# shale-theme-watcher.
+
+# The title bar colour, as the Shale window decoration draws it: the Header colours, or
+# the older WM ones for colour schemes without a Header group.
+read_color() { kreadconfig6 --file kdeglobals --group "$1" --key "$2"; }
+bg=$(read_color Colors:Header BackgroundNormal)
+fg=$(read_color Colors:Header ForegroundNormal)
+[ -n "$bg" ] || bg=$(read_color WM activeBackground)
+[ -n "$fg" ] || fg=$(read_color WM activeForeground)
+[ -n "$bg" ] || bg=30,30,30
+[ -n "$fg" ] || fg=252,252,252
+mode=$(echo "$bg" | awk -F, '{ print ($1 + $2 + $3 > 384) ? "light" : "dark" }')
+
+# Konsole: a colour scheme made from the title bar, and the profile that uses it.
+dir="${XDG_DATA_HOME:-$HOME/.local/share}/konsole"
+mkdir -p "$dir"
+intense=$(echo "$bg" | awk -F, -v m="$mode" '{ d = (m == "light") ? -8 : 8
+    for (i = 1; i <= 3; i++) { v = $i + d; if (v < 0) v = 0; if (v > 255) v = 255
+    printf "%s%d", (i > 1 ? "," : ""), v } }')
+if [ "$mode" = light ]; then
+    # At least 7:1 contrast on white (4.5:1 for faint colours).
+    palette="105,118,130
+35,38,41 74,88,105 105,118,130
+157,47,57 150,40,52 160,99,105
+20,99,53 19,100,53 82,126,101
+141,66,0 141,66,0 151,107,69
+32,86,157 28,80,150 91,117,153
+118,64,142 100,50,122 131,107,142
+13,99,82 11,99,82 79,125,116
+83,86,89 78,87,97 114,116,119"
+else
+    palette="138,155,176
+30,30,30 95,113,135 30,30,30
+218,68,83 237,105,118 150,50,60
+39,174,96 76,206,128 30,120,70
+246,116,0 253,165,80 170,82,0
+53,132,228 106,168,243 40,92,158
+155,89,182 189,133,211 108,62,128
+26,188,156 84,220,192 20,130,108
+195,207,220 252,252,252 138,155,176"
+fi
+scheme=$(echo "$palette" | awk -v bg="$bg" -v fg="$fg" -v intense="$intense" '
+    NR == 1 {
+        print "[General]\nDescription=Shale (matches the window title bar)\nOpacity=1\nWallpaper=\n"
+        print "[Background]\nColor=" bg "\n[BackgroundIntense]\nColor=" intense
+        print "[BackgroundFaint]\nColor=" bg "\n"
+        print "[Foreground]\nColor=" fg "\n[ForegroundIntense]\nColor=" fg
+        print "[ForegroundFaint]\nColor=" $1 "\n"
+        next
+    }
+    {
+        n = NR - 2
+        print "[Color" n "]\nColor=" $1 "\n[Color" n "Intense]\nColor=" $2
+        print "[Color" n "Faint]\nColor=" $3
+    }')
+# Only rewrite when something changed, so open terminals aren't reloaded for nothing.
+[ "$scheme" = "$(cat "$dir/ShaleTheme.colorscheme" 2>/dev/null)" ] ||
+    printf '%s\n' "$scheme" > "$dir/ShaleTheme.colorscheme"
+
+profile="$dir/ShaleTheme.profile"
+[ -f "$profile" ] || cp /usr/share/konsole/Shale.profile "$profile"
+kwriteconfig6 --file "$profile" --group General --key Name "Shale Theme"
+kwriteconfig6 --file "$profile" --group Appearance --key ColorScheme ShaleTheme
+# Konsole's default environment, plus a marker for the prompt and fastfetch colours.
+kwriteconfig6 --file "$profile" --group General --key Environment \
+    "TERM=xterm-256color,COLORTERM=truecolor,SHALE_TERMINAL=$mode"
+
+# Use it, unless the user picked some other profile themselves.
+case "$(kreadconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile)" in
+    ""|Shale.profile|ShaleDarker.profile|ShaleLight.profile)
+        kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile ShaleTheme.profile ;;
+esac
+
+# Recolour terminals that are already open: re-apply the profile to their sessions.
+for svc in $(qdbus6 2>/dev/null | grep '^ *org\.kde\.konsole'); do
+    for s in $(qdbus6 "$svc" 2>/dev/null | grep '^/Sessions/'); do
+        [ "$(qdbus6 "$svc" "$s" org.kde.konsole.Session.profile 2>/dev/null)" = "Shale Theme" ] &&
+            qdbus6 "$svc" "$s" org.kde.konsole.Session.setProfile "Shale Theme" >/dev/null 2>&1
+    done
+done
+
+# The login screen can't know whose theme to show, so it follows whoever logged in last.
+[ "$mode" = light ] && wall=images || wall=images_dark
+grep -q "^background=/usr/share/wallpapers/Shale/contents/$wall/" \
+    /usr/share/sddm/themes/breeze/theme.conf.user 2>/dev/null ||
+    pkexec /usr/lib/shale/shale-login-wallpaper "$mode" 2>/dev/null
+exit 0
