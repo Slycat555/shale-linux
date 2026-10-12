@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{ "Name": "Shale Linux" }],
+        "Category": "",
+        "Description": "Shale, one shade of grey darker (#141414)",
+        "Id": "org.shale.darker",
+        "License": "GPL-3.0-or-later",
+        "Name": "Shale Darker",
+        "Version": "1.0"
+    },
+    "X-Plasma-APIVersion": "2"
+}
