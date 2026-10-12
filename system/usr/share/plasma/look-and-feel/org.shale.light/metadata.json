@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{ "Name": "Shale Linux" }],
+        "Category": "",
+        "Description": "Shale in light mode, with Breeze Light colours",
+        "Id": "org.shale.light",
+        "License": "GPL-3.0-or-later",
+        "Name": "Shale Light",
+        "Version": "1.0"
+    },
+    "X-Plasma-APIVersion": "2"
+}
