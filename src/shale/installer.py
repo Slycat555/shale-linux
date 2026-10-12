@@ -41,7 +41,7 @@ SLIDES = [
      "Browse, view and touch up your photos."),
     ("chromium", "internet-web-browser", "Chromium",
      "A fast, secure web browser."),
-    ("system-software-update", "system-software-update", "Easy updates",
+    ("shale-update", "system-software-update", "Easy updates",
      "Open Software Update from the app menu to keep everything current, "
      "with one click."),
     ("preferences-system-bluetooth", "bluetooth", "Bluetooth built in",

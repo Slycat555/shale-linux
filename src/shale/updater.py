@@ -19,7 +19,7 @@ class Updater(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Shale Update")
-        self.setWindowIcon(QIcon.fromTheme("system-software-update", QIcon(theme.LOGO)))
+        self.setWindowIcon(QIcon.fromTheme("shale-update", QIcon(theme.LOGO)))
         self.setFixedSize(520, 280)
 
         logo = QLabel()

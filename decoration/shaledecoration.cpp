@@ -115,6 +115,9 @@ void Decoration::updateLayout()
     setResizeOnlyBorders(maximized ? QMarginsF() : QMarginsF(6, 6, 6, 6));
     setTitleBar(QRectF(0, 0, width, TitleBarHeight));
     setBorderRadius(KDecoration3::BorderRadius(radius));
+    // A thin dark frame (never a light one), like Windows 11 in dark mode.
+    setBorderOutline(maximized ? KDecoration3::BorderOutline()
+                               : KDecoration3::BorderOutline(1, QColor(0, 0, 0, 170), KDecoration3::BorderRadius(radius)));
 
     const QSignalBlocker blockLeft(m_leftButtons);
     const QSignalBlocker blockRight(m_rightButtons);
