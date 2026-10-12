@@ -34,7 +34,7 @@ BASE_PACKAGES = [
     # Shale Snapshots (Timeshift fork) and its scheduler
     "cronie", "vte3", "libgee", "json-glib", "psmisc",
     # Fonts
-    "noto-fonts", "noto-fonts-emoji", "noto-fonts-cjk", "ttf-liberation",
+    "noto-fonts", "noto-fonts-emoji", "ttf-ibm-plex", "noto-fonts-cjk", "ttf-liberation",
 ]
 
 KDE_PACKAGES = [

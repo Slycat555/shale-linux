@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Renders the default Shale wallpaper: layered, softly curving strata on #1e1e1e.
+"""Renders the default Shale wallpaper: layered, crisp curving strata on #1e1e1e.
 
 Usage: make-wallpaper.py OUT.png [WIDTH HEIGHT]
 """
@@ -45,7 +45,7 @@ for idx, (color, base) in enumerate(bands):
     top = curve(base - 0.03, idx)
     draw.polygon(top + [(w, h), (0, h)], fill=color)
 
-img = img.filter(ImageFilter.GaussianBlur(3 * S))
+# No blur: the 2x supersampling already gives smooth, crisp edges at 4K.
 img = img.resize((W, H), Image.LANCZOS)
 
 # Subtle vignette and grain to avoid banding.

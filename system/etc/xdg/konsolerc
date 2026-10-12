@@ -1,0 +1,12 @@
+[Desktop Entry]
+DefaultProfile=Shale.profile
+
+[MainWindow]
+MenuBar=Disabled
+ToolBarsMovable=Disabled
+
+[MainWindow][Toolbar mainToolBar]
+Hidden=true
+
+[MainWindow][Toolbar sessionToolbar]
+Hidden=true

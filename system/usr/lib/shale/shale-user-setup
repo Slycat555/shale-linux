@@ -11,6 +11,12 @@ cp -f /usr/share/shale/gtk-4.0/shale-adwaita.css "$dir/shale-adwaita.css"
 grep -q "shale-adwaita.css" "$dir/gtk.css" ||
     printf "@import 'shale-adwaita.css';\n" >> "$dir/gtk.css"
 
+# The Shale terminal prompt, loaded from ~/.bashrc.
+rc="$HOME/.bashrc"
+[ -f "$rc" ] || : > "$rc"
+grep -q "/usr/share/shale/bashrc" "$rc" ||
+    printf '\n# Shale terminal prompt\n[ -r /usr/share/shale/bashrc ] && . /usr/share/shale/bashrc\n' >> "$rc"
+
 # Bazaar must not linger in the background (and so in the system tray) after its
 # window is closed; Shale Update handles updates instead.
 flatpak permission-set background background io.github.kolunmi.Bazaar no 2>/dev/null
