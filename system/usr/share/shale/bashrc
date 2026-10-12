@@ -1,4 +1,11 @@
 # Shale's terminal prompt: [you@computer folder]$ in soft slate, then your command in
 # normal text. Loaded from ~/.bashrc (added by shale-user-setup); delete that line to opt out.
 [[ $- == *i* ]] || return
-PS1='\[\e[38;2;138;155;176m\][\u@\h \W]\$\[\e[0m\] '
+if [[ $SHALE_TERMINAL == light ]]; then
+    # Shale Light terminal (set by its Konsole profile): darker slate and fastfetch colours.
+    PS1='\[\e[38;2;79;88;100m\][\u@\h \W]\$\[\e[0m\] '
+    [[ -e ~/.config/fastfetch/config.jsonc ]] ||
+        alias fastfetch='fastfetch --config /etc/xdg/fastfetch/config-light.jsonc'
+else
+    PS1='\[\e[38;2;138;155;176m\][\u@\h \W]\$\[\e[0m\] '
+fi
