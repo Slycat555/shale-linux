@@ -27,6 +27,7 @@ file_permissions=(
   ["/usr/lib/shale/shale-update-helper"]="0:0:755"
   ["/usr/lib/shale/shale-firstboot"]="0:0:755"
   ["/usr/lib/shale/shale-user-setup"]="0:0:755"
+  ["/usr/lib/shale/shale-login-wallpaper"]="0:0:755"
   ["/usr/bin/timeshift"]="0:0:755"
   ["/usr/bin/timeshift-gtk"]="0:0:755"
   ["/usr/bin/timeshift-launcher"]="0:0:755"

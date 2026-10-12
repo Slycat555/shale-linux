@@ -33,6 +33,15 @@ case "$profile" in
         kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile "$want" ;;
 esac
 
+# The login screen can't know whose theme to show, so it follows whoever logged in last:
+# Shale's light wallpaper for a light colour scheme, the dark one otherwise.
+bg=$(kreadconfig6 --file kdeglobals --group Colors:Window --key BackgroundNormal)
+mode=$(echo "$bg" | awk -F, '{ print ($1 + $2 + $3 > 384) ? "light" : "dark" }')
+[ "$mode" = light ] && dir=images || dir=images_dark
+grep -q "^background=/usr/share/wallpapers/Shale/contents/$dir/" \
+    /usr/share/sddm/themes/breeze/theme.conf.user 2>/dev/null ||
+    pkexec /usr/lib/shale/shale-login-wallpaper "$mode" 2>/dev/null
+
 # Bazaar must not linger in the background (and so in the system tray) after its
 # window is closed; Shale Update handles updates instead.
 flatpak permission-set background background io.github.kolunmi.Bazaar no 2>/dev/null

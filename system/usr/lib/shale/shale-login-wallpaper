@@ -1,0 +1,11 @@
+#!/bin/sh
+# Points the login screen at the light or dark Shale wallpaper, to match the colour scheme
+# of whoever logged in last. Run as root through pkexec by shale-user-setup. A login
+# wallpaper that isn't one of Shale's is left alone.
+case "$1" in
+    light) dir=images ;;
+    dark) dir=images_dark ;;
+    *) echo "usage: shale-login-wallpaper light|dark" >&2; exit 2 ;;
+esac
+conf=/usr/share/sddm/themes/breeze/theme.conf.user
+sed -i "s|^background=/usr/share/wallpapers/Shale/contents/[a-z_]*/|background=/usr/share/wallpapers/Shale/contents/$dir/|" "$conf"
