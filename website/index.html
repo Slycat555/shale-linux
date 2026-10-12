@@ -5,152 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <title>Shale Linux</title>
-<meta name="description" content="Shale Linux is a free, friendly alternative to Windows and macOS. Install it from a USB stick and everything is ready to use.">
+<meta name="description" content="Shale Linux is a free, friendly computer system for people who are new to Linux. Install it from a USB stick and everything is ready to use.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600&display=swap">
 <style>
-/* Layout: a product page that lets the desktop do the talking. A centred welcome over
-   a large picture of the real Shale desktop, then a few sections, each built around
-   one real screenshot or the real app icons. Dark grey like the desktop; Shale's blue
-   for the buttons that matter. Deliberately dark only. */
+/* Layout: a calm, friendly walk-through. A big welcoming hero over soft wavy strata,
+   then one idea per section, alternating text and pictures, ending in a plain FAQ.
+   The desktop's own colours (#1e1e1e, like Shale Dark) with the logo's slate as the
+   accent. Deliberately dark only, like the desktop itself. */
 :root {
   color-scheme: dark;
-  --ground: #161616;     /* page */
-  --raised: #1e1e1e;     /* the desktop's own window colour */
-  --seam: #2c2c2c;       /* borders */
-  --ink: #ededed;        /* text */
-  --soft: #a6a6a6;       /* secondary text */
-  --blue: #3584e4;       /* Shale's accent, as in its own apps */
+  --ground: #161616;       /* page: a step darker than Shale Dark */
+  --raised: #1e1e1e;       /* cards, panels: Shale Dark */
+  --seam: #2e2e2e;         /* borders */
+  --ink: #ececec;          /* text */
+  --soft: #a3a3a3;         /* secondary text */
+  --mist: #c3cfdc;         /* accent: the logo's top stratum */
+  --on-mist: #15191f;
+  --blue: #3584e4;         /* buttons: Shale's accent, as in its own apps */
   --blue-hover: #4a92ea;
-  --on-blue: #ffffff;
+  --s1: #c3cfdc; --s2: #8a9bb0; --s3: #5f7187; --s4: #43536a;
+  --good: #7fc8a9;
   --caution: #e0a458;
-  --font: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", sans-serif;
+  --body: "Figtree", "Segoe UI", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.0625rem/1.65 var(--font); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
-img { max-width: 100%; }
-.wrap { max-width: 1140px; margin-inline: auto; padding-inline: 20px; }
-h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 700; letter-spacing: -0.02em; }
-h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); line-height: 1.12; }
-h3 { font-size: 1.15rem; line-height: 1.3; letter-spacing: -0.01em; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--mist); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1100px; margin-inline: auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.015em; }
+h2 { font-size: clamp(2rem, 4.2vw, 2.9rem); font-weight: 700; line-height: 1.08; }
+h3 { font-size: 1.25rem; font-weight: 650; line-height: 1.25; }
 p { margin: 0; }
-.sub { color: var(--soft); font-size: 1.12rem; max-width: 54ch; }
-
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 26px; border-radius: 10px; font: 600 1.02rem/1 var(--font); text-decoration: none; color: var(--ink); border: 1px solid var(--seam); background: var(--raised); transition: background-color .15s, border-color .15s; }
-.btn:hover { border-color: #444; }
-.btn.blue { background: var(--blue); border-color: var(--blue); color: var(--on-blue); }
-.btn.blue:hover { background: var(--blue-hover); border-color: var(--blue-hover); }
-.btn svg { width: 18px; height: 18px; }
+.lede { color: var(--soft); font-size: 1.15rem; max-width: 56ch; }
+.kicker { font: 600 0.95rem/1 var(--body); color: var(--soft); }
 
 /* nav */
-.nav { display: flex; align-items: center; gap: 28px; padding-block: 18px; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; }
-.brand svg { width: 30px; height: 30px; }
-.nav ul { display: flex; gap: 26px; list-style: none; margin: 0 0 0 auto; padding: 0; }
-.nav ul a { text-decoration: none; color: var(--soft); font-weight: 500; font-size: 0.98rem; }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 1.2rem/1 var(--display); }
+.brand svg { width: 32px; height: 32px; }
+.nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; }
+.nav ul a { text-decoration: none; color: var(--soft); font-weight: 500; }
 .nav ul a:hover { color: var(--ink); }
-.nav .btn { padding: 10px 18px; font-size: 0.95rem; }
 
 /* hero */
-.hero { text-align: center; padding-block: 64px 0; }
-.hero h1 { font-size: clamp(2.6rem, 6.4vw, 4.6rem); line-height: 1.04; letter-spacing: -0.035em; font-weight: 800; }
-.hero .sub { margin: 20px auto 0; font-size: 1.22rem; }
-.hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
-.hero .fine { margin-top: 16px; color: var(--soft); font-size: 0.92rem; }
-
-/* the desktop picture: real wallpaper, real Dolphin window, Shale's taskbar */
-.desktop-wrap { margin-top: 56px; position: relative; }
-.desktop-wrap::before { content: ""; position: absolute; inset: 8% 6% -4%; background: radial-gradient(closest-side, rgb(53 132 228 / .22), transparent); filter: blur(40px); z-index: 0; }
-.screen { position: relative; z-index: 1; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; border: 1px solid #333; box-shadow: 0 40px 90px rgb(0 0 0 / .55); container-type: inline-size; background: #1e1e1e; }
-.screen .wall { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.screen .win { position: absolute; }
-.screen .win.files { left: 6%; top: 5%; width: 52%; }
-.screen .win.store { right: 6%; top: 12%; width: 54%; }
-.screen .taskbar { position: absolute; inset: auto 0 0 0; height: 6.2%; background: rgb(24 24 24 / .97); border-top: 1px solid #2a2a2a; display: flex; align-items: center; gap: 1.1cqw; padding-inline: 1.2cqw; }
-.screen .taskbar img, .screen .taskbar svg { height: 62%; width: auto; }
-.screen .taskbar .active { position: relative; }
-.screen .taskbar .clock { margin-left: auto; color: #d6d6d6; font: 500 1.05cqw/1.15 var(--font); text-align: right; }
+.hero { position: relative; overflow: hidden; }
+.hero-in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 40px; align-items: center; padding-block: 48px 220px; }
+.hero h1 { font-size: clamp(2.8rem, 6.6vw, 5rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.03em; }
+.hero .lede { margin-top: 22px; font-size: 1.25rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 14px; font: 600 1.05rem/1 var(--body); text-decoration: none; border: 1px solid var(--seam); color: var(--ink); background: var(--raised); transition: border-color .15s, transform .15s; }
+.btn:hover { border-color: var(--soft); }
+.btn.primary { background: var(--blue); color: #ffffff; border-color: var(--blue); }
+.btn.primary:hover { background: var(--blue-hover); border-color: var(--blue-hover); }
+.btn.primary:hover { transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) { .btn.primary:hover { transform: none; } }
+.btn svg { width: 18px; height: 18px; }
+.reassure { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; color: var(--soft); font-size: 0.95rem; list-style: none; padding: 0; }
+.reassure li { display: flex; align-items: center; gap: 7px; }
+.reassure li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--good); }
+.hero-mark { justify-self: center; width: min(100%, 340px); aspect-ratio: 1; max-width: 100%; }
+.hero-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 26px 44px rgb(0 0 0 / .35)); }
+#strata { position: absolute; inset: auto 0 0 0; width: 100%; height: 200px; display: block; }
 
 /* sections */
-.section { padding-block: 112px; }
-.row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
-.row.flip > :first-child { order: 2; }
-.text { display: grid; gap: 18px; }
-.eyebrow { color: var(--blue); font-weight: 600; font-size: 0.98rem; }
-.frame { border-radius: 12px; overflow: hidden; border: 1px solid var(--seam); background: var(--raised); }
-.frame img { display: block; width: 100%; height: auto; }
+.section { padding-block: 92px; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.split.wide-pic { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+.stack { display: grid; gap: 18px; }
 .shot { width: 100%; height: auto; display: block; }
+.caption { color: var(--soft); font-size: 0.9rem; margin-top: 10px; }
 
-/* apps */
-.apps-head { text-align: center; display: grid; gap: 16px; justify-items: center; }
-.app-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 48px; }
-.app { display: grid; justify-items: center; text-align: center; gap: 10px; padding: 8px 4px; }
-.app img { width: 72px; height: 72px; }
-.app b { font-weight: 600; font-size: 1rem; }
-.app span { color: var(--soft); font-size: 0.9rem; line-height: 1.4; max-width: 20ch; }
-.store { margin-top: 88px; }
+/* everyday */
+.everyday { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.task { background: var(--raised); border: 1px solid var(--seam); border-radius: 18px; padding: 24px; display: grid; gap: 8px; align-content: start; }
+.task .ico { width: 52px; height: 52px; display: block; margin-bottom: 4px; }
+.task p { color: var(--soft); }
+.task .app { margin-top: 6px; font-size: 0.88rem; }
+.task .app b { color: var(--ink); font-weight: 600; }
 
 /* undo */
-.undo-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 14px; counter-reset: u; }
-.undo-list li { counter-increment: u; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; color: var(--soft); }
-.undo-list li::before { content: counter(u); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; border: 1px solid #3a3a3a; color: var(--ink); font-weight: 600; font-size: 0.92rem; }
-.undo-list b { color: var(--ink); font-weight: 600; }
-.badge-art { display: grid; place-items: center; }
-.badge-art img { width: min(100%, 300px); height: auto; }
+.undo { background: var(--raised); border: 1px solid var(--seam); border-radius: 24px; padding: clamp(24px, 5vw, 56px); }
+.undo-steps { display: grid; gap: 16px; list-style: none; margin: 0; padding: 0; }
+.undo-steps li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; }
+.num { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--mist); color: var(--on-mist); font: 700 1rem/1 var(--display); }
+.undo-steps p { color: var(--soft); }
+.undo-steps b { color: var(--ink); font-weight: 600; display: block; }
 
-/* trio */
-.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; border-top: 1px solid var(--seam); padding-top: 48px; }
-.trio div { display: grid; gap: 8px; align-content: start; }
-.trio p { color: var(--soft); }
+/* familiar */
+.mock { border-radius: 10px; overflow: hidden; background: #1e1e1e; box-shadow: 0 0 0 1px rgb(0 0 0 / .6), 0 22px 50px rgb(0 0 0 / .3); color: #e8ecf1; }
+.mock .bar { display: flex; height: 34px; align-items: stretch; font: 400 0.85rem/34px var(--body); }
+.mock .bar .t { flex: 1; padding-inline: 14px; color: #cfd6de; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mock .bar .b { width: 48px; display: grid; place-items: center; }
+.mock .bar .b svg { width: 10px; height: 10px; stroke: #cfd6de; fill: none; stroke-width: 1; }
+.mock .bar .b.x { background: #c42b1c; }
+.mock .bar .b.x svg { stroke: #fff; }
+.mock .win { height: 170px; background: #222; display: grid; grid-template-columns: 150px minmax(0, 1fr); }
+.mock .side { border-right: 1px solid #2f2f2f; padding: 14px; display: grid; gap: 9px; align-content: start; }
+.mock .side i { display: block; height: 9px; border-radius: 4px; background: #3a3f46; }
+.mock .side i:nth-child(2) { width: 70%; } .mock .side i:nth-child(3) { width: 85%; } .mock .side i:nth-child(4) { width: 60%; }
+.mock .main { padding: 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-content: start; }
+.mock .main i { aspect-ratio: 1; border-radius: 8px; background: #3584e4; opacity: .85; display: block; }
+.mock .taskbar { display: flex; align-items: center; gap: 10px; height: 46px; padding-inline: 12px; background: #181818; border-top: 1px solid #2a2a2a; }
+.mock .taskbar svg { width: 26px; height: 26px; }
+.mock .taskbar i { width: 26px; height: 26px; border-radius: 6px; display: block; background: #2f3a46; }
+.mock .taskbar .clock { margin-left: auto; font: 500 0.8rem/1 var(--body); color: #cfd6de; }
 
-/* download */
-.download { background: var(--raised); border: 1px solid var(--seam); border-radius: 20px; padding: clamp(28px, 5vw, 64px); display: grid; gap: 40px; }
-.download-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px; }
-.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; counter-reset: s; }
-.steps li { counter-increment: s; display: grid; gap: 6px; align-content: start; }
-.steps li::before { content: "Step " counter(s); color: var(--blue); font-weight: 600; font-size: 0.9rem; }
-.steps p { color: var(--soft); font-size: 0.98rem; }
-.notes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; border-top: 1px solid var(--seam); padding-top: 28px; }
-.notes p { color: var(--soft); font-size: 0.98rem; }
-.notes b { color: var(--ink); }
-.notes .warn b { color: var(--caution); }
+/* get */
+.steps { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.steps li { counter-increment: s; background: var(--raised); border: 1px solid var(--seam); border-radius: 18px; padding: 24px; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: counter(s); width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--mist); color: var(--on-mist); font: 700 1rem/1 var(--display); }
+.steps p { color: var(--soft); }
+.need { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.note { border-radius: 14px; padding: 18px 20px; border: 1px solid var(--seam); }
+.note b { display: block; margin-bottom: 4px; }
+.note p { color: var(--soft); }
+.note.warn { border-color: var(--caution); }
+.note.warn b { color: var(--caution); }
 
 /* faq */
-.faq { max-width: 780px; margin: 40px auto 0; border-top: 1px solid var(--seam); }
-details { border-bottom: 1px solid var(--seam); }
-summary { cursor: pointer; list-style: none; padding-block: 20px; font-weight: 600; font-size: 1.1rem; display: flex; justify-content: space-between; gap: 16px; }
+.faq { display: grid; gap: 12px; margin-top: 36px; max-width: 760px; }
+details { background: var(--raised); border: 1px solid var(--seam); border-radius: 14px; padding: 4px 20px; }
+summary { cursor: pointer; list-style: none; padding-block: 16px; font: 600 1.1rem/1.35 var(--body); display: flex; justify-content: space-between; gap: 16px; }
 summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; font-size: 1.4rem; line-height: 1; color: var(--soft); transition: transform .15s; }
+summary::after { content: "+"; font: 400 1.5rem/1 var(--display); color: var(--soft); transition: transform .15s; }
 details[open] summary::after { transform: rotate(45deg); }
-details p { color: var(--soft); padding-bottom: 22px; max-width: 66ch; }
+details p { color: var(--soft); padding-bottom: 18px; max-width: 64ch; }
 
-/* closing */
-.closing { text-align: center; display: grid; gap: 18px; justify-items: center; }
-.closing svg { width: 64px; height: 64px; }
+/* curious */
+.curious { border-top: 1px solid var(--seam); }
+.curious .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+.curious ul { margin: 0; padding-left: 1.1em; color: var(--soft); display: grid; gap: 6px; }
+.curious a { color: var(--ink); }
 
-footer { border-top: 1px solid var(--seam); padding-block: 30px 42px; color: var(--soft); font-size: 0.9rem; }
-footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; }
+footer { border-top: 1px solid var(--seam); padding-block: 32px 44px; color: var(--soft); font-size: 0.92rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 30px; align-items: center; }
+footer .brand { color: var(--ink); }
 
-@media (max-width: 900px) {
-  .row, .row.flip { grid-template-columns: minmax(0, 1fr); gap: 36px; }
-  .row.flip > :first-child { order: 0; }
-  .app-row { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 28px; }
-  .trio, .notes { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .section { padding-block: 72px; }
-  .nav ul { display: none; }
-  .nav .btn { margin-left: auto; }
+@media (max-width: 880px) {
+  .hero-in, .split, .split.wide-pic, .curious .wrap, .need { grid-template-columns: minmax(0, 1fr); }
+  .hero-in { padding-block: 24px 190px; }
+  .hero-mark { width: 180px; justify-self: start; grid-row: 1; }
+  .everyday, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section { padding-block: 64px; }
 }
-@media (max-width: 520px) {
-  .steps { grid-template-columns: minmax(0, 1fr); }
-  .app-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hero { padding-top: 36px; }
+@media (max-width: 560px) {
+  .everyday, .steps { grid-template-columns: minmax(0, 1fr); }
+  .nav ul { display: none; }
+  .mock .win { grid-template-columns: 90px minmax(0, 1fr); }
+  .mock .main { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 </style>
 </head>
@@ -171,164 +180,208 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: 
   </defs>
 </svg>
 
-<div class="wrap">
-  <nav class="nav" aria-label="Main">
-    <a class="brand" href="#top" id="top"><svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg>Shale</a>
-    <ul>
-      <li><a href="#familiar">Features</a></li>
-      <li><a href="#apps">Apps</a></li>
-      <li><a href="#questions">Questions</a></li>
-    </ul>
-    <a class="btn blue" href="#download">Download</a>
-  </nav>
-</div>
-
 <header class="hero">
   <div class="wrap">
-    <h1>Your computer, made calm.</h1>
-    <p class="sub">Shale is a free alternative to Windows and macOS. It's easy to use, quick to set up, and comes with everything you need.</p>
-    <div class="actions">
-      <a class="btn blue" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Shale</a>
-      <a class="btn" href="#familiar">Take a look</a>
-    </div>
-    <p class="fine">Free forever. No account, no ads.</p>
-
-    <div class="desktop-wrap">
-      <div class="screen" role="img" aria-label="The Shale desktop: the Files app and the Bazaar app store open over the grey layered wallpaper, with the taskbar along the bottom">
-        <img class="wall" src="wallpaper.png" alt="">
-        <img class="win files" src="dolphin.png" alt="">
-        <img class="win store" src="bazaar.png" alt="">
-        <div class="taskbar">
-          <svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg>
-          <img src="icons/bazaar.png" alt="">
-          <img src="icons/chromium.png" alt="">
-          <img src="icons/dolphin.png" alt="">
-          <img src="icons/calculator.png" alt="">
-          <span class="clock">8:45 PM<br>10/11/26</span>
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="#top" id="top"><svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg>Shale Linux</a>
+      <ul>
+        <li><a href="#apps">Apps</a></li>
+        <li><a href="#undo">Peace of mind</a></li>
+        <li><a href="#get">Get Shale</a></li>
+        <li><a href="#questions">Questions</a></li>
+      </ul>
+    </nav>
+    <div class="hero-in">
+      <div>
+        <h1>A calm, friendly home for your computer</h1>
+        <p class="lede">Shale is a free system for your PC, like Windows or macOS. Install it once and everything is ready: your browser, office apps, music and games. No tech skills needed.</p>
+        <div class="cta">
+          <a class="btn primary" href="#get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Get Shale, it's free</a>
+          <a class="btn" href="#apps">See what's inside</a>
         </div>
+        <ul class="reassure">
+          <li>Free, no account needed</li>
+          <li>No ads or tracking</li>
+          <li>Updates in one click</li>
+        </ul>
       </div>
+      <div class="hero-mark"><svg viewBox="0 0 128 128" role="img" aria-label="The Shale logo: soft grey layers of rock inside a circle"><use href="#shale-mark"/></svg></div>
     </div>
   </div>
+  <canvas id="strata" aria-hidden="true"></canvas>
 </header>
 
 <main>
-  <section class="section" id="familiar">
-    <div class="wrap row">
-      <div class="text">
-        <p class="eyebrow">Familiar from day one</p>
-        <h2>If you've used Windows, you'll feel at home</h2>
-        <p class="sub">The start menu sits in the corner, your apps live on the taskbar, and every window has minimize, maximize and close right where you expect them.</p>
+  <section class="section" id="apps">
+    <div class="wrap split wide-pic">
+      <div class="stack">
+        <p class="kicker">The app store</p>
+        <h2>Thousands of free apps, one click away</h2>
+        <p class="lede">Shale comes with Bazaar, an app store full of free software. Find what you need, click Install, and it shows up in your menu. No websites to search and no installers to click through.</p>
+        <p class="lede">Games too: get Steam from Bazaar and play your library.</p>
       </div>
-      <div class="frame"><img src="titlebar.png" width="900" height="200" alt="Close-up of a Shale window's title bar with minimize, maximize and close buttons"></div>
+      <div>
+        <img class="shot" src="bazaar.png" width="1600" height="1197" alt="The Bazaar app store in Shale, showing popular apps like Firefox, Discord, Spotify, Steam and OBS Studio">
+        <p class="caption">Bazaar, the app store that comes with Shale.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="apps" style="padding-top:0">
+  <section class="section" style="padding-top:20px">
     <div class="wrap">
-      <div class="apps-head">
-        <p class="eyebrow">Ready to go</p>
-        <h2>The apps you need, already installed</h2>
-        <p class="sub">Browse, write, watch, look through photos and share files the moment you log in.</p>
-      </div>
-      <div class="app-row">
-        <div class="app"><img src="icons/chromium.png" alt=""><b>Chromium</b><span>Web browser</span></div>
-        <div class="app"><img src="icons/libreoffice.png" alt=""><b>LibreOffice</b><span>Opens Word and Excel files</span></div>
-        <div class="app"><img src="icons/vlc.png" alt=""><b>VLC</b><span>Plays any video or music</span></div>
-        <div class="app"><img src="icons/gwenview.png" alt=""><b>Gwenview</b><span>Photos</span></div>
-        <div class="app"><img src="icons/localsend.png" alt=""><b>LocalSend</b><span>Send files to your phone</span></div>
-        <div class="app"><img src="icons/calculator.png" alt=""><b>Calculator</b><span>Quick sums</span></div>
-      </div>
-
-      <div class="row store">
-        <div class="text">
-          <p class="eyebrow">Thousands more</p>
-          <h2>One app store for everything else</h2>
-          <p class="sub">Bazaar has thousands of free apps and games. Find one, click Install, and it's in your menu. No websites to search, no installers to click through.</p>
-          <p class="sub">Steam, Discord, Spotify and OBS are all there.</p>
+      <p class="kicker">Ready on day one</p>
+      <h2 style="margin-top:12px">Everything you do every day, already installed</h2>
+      <div class="everyday">
+        <div class="task">
+          <img class="ico" src="icons/chromium.png" width="52" height="52" alt="Chromium icon">
+          <h3>Browse the web</h3><p>A fast, familiar web browser for your bookmarks, email and videos.</p><p class="app">Comes with <b>Chromium</b></p>
         </div>
-        <img class="shot" src="bazaar.png" width="1600" height="1197" alt="The Bazaar app store showing popular apps like Firefox, Discord, Spotify, Steam and OBS Studio">
+        <div class="task">
+          <img class="ico" src="icons/libreoffice.png" width="52" height="52" alt="LibreOffice Writer icon">
+          <h3>Write and work</h3><p>Documents, spreadsheets and slides. Opens and saves Word and Excel files.</p><p class="app">Comes with <b>LibreOffice</b></p>
+        </div>
+        <div class="task">
+          <img class="ico" src="icons/vlc.png" width="52" height="52" alt="VLC icon">
+          <h3>Watch and listen</h3><p>Plays almost any video or music file with no extra downloads.</p><p class="app">Comes with <b>VLC</b></p>
+        </div>
+        <div class="task">
+          <img class="ico" src="icons/gwenview.png" width="52" height="52" alt="Gwenview icon">
+          <h3>Look at photos</h3><p>Browse your pictures and make quick fixes.</p><p class="app">Comes with <b>Gwenview</b></p>
+        </div>
+        <div class="task">
+          <img class="ico" src="icons/localsend.png" width="52" height="52" alt="LocalSend icon">
+          <h3>Send files to your phone</h3><p>Share photos and files with phones and computers nearby, no cables needed.</p><p class="app">Comes with <b>LocalSend</b></p>
+        </div>
+        <div class="task">
+          <img class="ico" src="icons/calculator.png" width="52" height="52" alt="Calculator icon">
+          <h3>Quick sums</h3><p>A simple calculator, pinned right on the taskbar.</p><p class="app">Comes with <b>Calculator</b></p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="wrap row flip">
-      <div class="text">
-        <p class="eyebrow">Peace of mind</p>
-        <h2>Something broke? Go back to yesterday.</h2>
-        <p class="sub">Shale saves a copy of your system every day and before every update. If something stops working, put it back the way it was. Your photos and documents are never touched.</p>
-        <ol class="undo-list">
-          <li><span><b>Open Shale Snapshots</b> from the menu.</span></li>
-          <li><span><b>Pick a day</b> when everything worked.</span></li>
-          <li><span><b>Click Restore</b> and restart.</span></li>
-        </ol>
+  <section class="section" id="undo">
+    <div class="wrap undo split">
+      <div class="stack">
+        <p class="kicker">Peace of mind</p>
+        <h2>Something went wrong? Go back in time.</h2>
+        <p class="lede">Shale quietly saves a copy of your system every day and right before every update. If something stops working, you can put everything back the way it was. Your photos and documents stay exactly where they are.</p>
       </div>
-      <div class="badge-art"><img src="icons/shale-snapshots.png" width="300" height="300" alt="The Shale Snapshots icon"></div>
+      <ol class="undo-steps">
+        <li><span class="num">1</span><p><b>Open Shale Snapshots</b>It lists every saved copy with its date, like "Before update, yesterday".</p></li>
+        <li><span class="num">2</span><p><b>Pick a day when things worked</b>Choose the copy from before the problem started.</p></li>
+        <li><span class="num">3</span><p><b>Click Restore and restart</b>Your computer comes back just as it was then.</p></li>
+      </ol>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="wrap">
-      <div class="trio">
-        <div><h3>Updates without the hassle</h3><p>One click updates your whole computer and every app, with a progress bar and no password.</p></div>
-        <div><h3>Private by default</h3><p>No ads, no tracking and no account to sign up for. Your computer is yours.</p></div>
-        <div><h3>Free, now and later</h3><p>Shale costs nothing to download, use or share, and it never will.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="download" style="padding-top:0">
-    <div class="wrap">
-      <div class="download">
-        <div class="download-head">
-          <div class="text" style="gap:12px">
-            <h2>Get Shale</h2>
-            <p class="sub">Try it from a USB stick first. Install it when you're ready.</p>
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <div class="mock" role="img" aria-label="A Shale window with minimize, maximize and close buttons on the right, above a taskbar with a start button">
+          <div class="bar"><div class="t">Home — Files</div>
+            <div class="b"><svg viewBox="0 0 10 10"><path d="M0 5.5h10"/></svg></div>
+            <div class="b"><svg viewBox="0 0 10 10"><rect x=".5" y=".5" width="9" height="9" rx="1"/></svg></div>
+            <div class="b x"><svg viewBox="0 0 10 10"><path d="M0 0l10 10M10 0L0 10"/></svg></div>
           </div>
-          <a class="btn blue" href="https://github.com/slycat555/shale-linux/releases" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Shale</a>
+          <div class="win"><div class="side"><i></i><i></i><i></i><i></i></div><div class="main"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="taskbar"><svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg><i></i><i></i><i></i><span class="clock">8:45 PM</span></div>
         </div>
-        <ol class="steps">
-          <li><h3>Download</h3><p>Get the Shale file from the download page.</p></li>
-          <li><h3>Make a USB stick</h3><p>Use the free app <a href="https://etcher.balena.io/" target="_blank" rel="noopener">balenaEtcher</a>: pick the file, pick the stick, click Flash.</p></li>
-          <li><h3>Try it</h3><p>Restart with the stick plugged in. Shale opens straight away.</p></li>
-          <li><h3>Install</h3><p>Click Install, choose your language, Wi-Fi, name and password.</p></li>
-        </ol>
-        <div class="notes">
-          <p><b>What you need:</b> a USB stick of 8 GB or more, an internet connection while installing, and a 64-bit PC.</p>
-          <p class="warn"><b>Back up first:</b> installing replaces everything on the drive you pick, including Windows.</p>
-        </div>
+      </div>
+      <div class="stack">
+        <p class="kicker">Feels familiar</p>
+        <h2>If you've used Windows, you already know your way around</h2>
+        <p class="lede">The start menu is in the bottom corner, your open apps sit on the taskbar, and every window has minimize, maximize and close in the top right.</p>
+        <p class="lede">Updates take one click, with a progress bar and no password. Restart whenever it suits you.</p>
       </div>
     </div>
   </section>
 
-  <section class="section" id="questions" style="padding-top:0">
+  <section class="section" id="get">
     <div class="wrap">
-      <h2 style="text-align:center">Questions</h2>
-      <div class="faq">
-        <details open><summary>What is Linux?</summary><p>Linux is free software that runs your computer, the same job Windows or macOS does. It powers most of the internet and every Android phone. Shale is a version of it made to be easy and calm for everyday use.</p></details>
-        <details><summary>Is it really free?</summary><p>Yes. Shale is free to download, use and share. No subscriptions, no ads and no account.</p></details>
-        <details><summary>Do I need to type commands?</summary><p>No. Installing, updating and adding apps all work with normal buttons and windows.</p></details>
-        <details><summary>Will my Windows programs work?</summary><p>Most popular apps have a free equivalent in Bazaar, and many Windows games run through Steam. Some Windows-only programs, like certain Adobe apps or games with strict anti-cheat, don't work. If you rely on one of those, check before you switch.</p></details>
-        <details><summary>Can I go back to Windows later?</summary><p>Yes, by reinstalling Windows from a Windows USB stick. Shale's snapshots fix problems within Shale, but they can't bring back a system that was replaced, so keep a backup of your files.</p></details>
-        <details><summary>Will it work on my computer?</summary><p>Shale runs on most 64-bit PCs. AMD graphics work right away, and Intel and NVIDIA graphics are set up for you during install. The easiest way to find out is to start from the USB stick and try it.</p></details>
+      <p class="kicker">Get Shale</p>
+      <h2 style="margin-top:12px">Four steps from download to desktop</h2>
+      <ol class="steps">
+        <li><h3>Download Shale</h3><p>Get the file from our <a href="https://github.com/slycat555/shale-linux/releases" target="_blank" rel="noopener">download page</a>. It's free.</p></li>
+        <li><h3>Put it on a USB stick</h3><p>Use the free app <a href="https://etcher.balena.io/" target="_blank" rel="noopener">balenaEtcher</a> or Fedora Media Writer. Pick the file, pick the stick, click Flash.</p></li>
+        <li><h3>Start from the stick</h3><p>Plug it in and restart. Shale opens and you can try it before installing anything.</p></li>
+        <li><h3>Click Install</h3><p>Choose your language, Wi-Fi, and a name and password. Shale does the rest.</p></li>
+      </ol>
+      <div class="need">
+        <div class="note"><b>What you need</b><p>A USB stick of 8 GB or more, an internet connection while installing, and a 64-bit PC.</p></div>
+        <div class="note warn"><b>Back up first</b><p>Installing Shale replaces everything on the drive you choose, including Windows. Copy your files somewhere safe before you start.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="wrap closing">
-      <svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg>
-      <h2>Give your computer a calmer life</h2>
-      <a class="btn blue" href="#download">Download Shale</a>
+  <section class="section" id="questions" style="padding-top:20px">
+    <div class="wrap">
+      <p class="kicker">Questions</p>
+      <h2 style="margin-top:12px">Things people ask first</h2>
+      <div class="faq">
+        <details open><summary>What is Linux?</summary><p>Linux is free software that runs your computer, the same job Windows or macOS does. It powers most of the internet and every Android phone. Shale is one version of it, set up to be easy and calm for everyday use.</p></details>
+        <details><summary>Is it really free?</summary><p>Yes. Shale is free to download, free to use and free to share. There are no subscriptions, no ads and no account to sign up for.</p></details>
+        <details><summary>Do I need to type commands?</summary><p>No. Installing, updating and adding apps all work with normal buttons and windows.</p></details>
+        <details><summary>Will my Windows programs work?</summary><p>Most popular things have a free equivalent in Bazaar, and many Windows games run through Steam. Some Windows-only programs, like certain Adobe apps or games with strict anti-cheat, don't work. If you rely on one of those, check before you switch.</p></details>
+        <details><summary>Can I go back to Windows later?</summary><p>Yes, by installing Windows again from a Windows USB stick. Shale's snapshots undo problems within Shale, but they can't bring back a system that was replaced, so keep a backup of your files.</p></details>
+        <details><summary>Will it work on my computer?</summary><p>Shale runs on most 64-bit PCs. AMD graphics work right away, and Intel and NVIDIA graphics are set up for you during install. The easiest way to check is to start from the USB stick and try it before installing.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section curious">
+    <div class="wrap">
+      <div class="stack">
+        <p class="kicker">For the curious</p>
+        <h3 style="font-size:1.6rem">What's under the hood</h3>
+        <p class="lede" style="font-size:1rem">You never need to know this, but if you're interested: Shale is built on Arch Linux and the KDE Plasma desktop, and all of it is open for anyone to read and improve.</p>
+      </div>
+      <ul>
+        <li>Based on <a href="https://archlinux.org" target="_blank" rel="noopener">Arch Linux</a>, so your software stays up to date</li>
+        <li>KDE Plasma 6 desktop on Wayland</li>
+        <li>Shale Snapshots is based on Timeshift by the Linux Mint team</li>
+        <li>Source code on <a href="https://github.com/slycat555/shale-linux" target="_blank" rel="noopener">GitHub</a>, free under the GPL-3.0</li>
+      </ul>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <p>Shale Linux is free software under the GPL-3.0. <a href="https://github.com/slycat555/shale-linux" target="_blank" rel="noopener">Source code on GitHub</a>.</p>
-    <p>Built on Arch Linux and KDE Plasma. Not affiliated with either.</p>
+    <a class="brand" href="#top"><svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg>Shale Linux</a>
+    <p>An independent project, not affiliated with Arch Linux or KDE.</p>
   </div>
 </footer>
+
+<script>
+(() => {
+  // Soft wavy strata across the bottom of the hero, in the logo's colours.
+  const canvas = document.getElementById("strata");
+  const ctx = canvas.getContext("2d");
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  function draw() {
+    const w = canvas.clientWidth, h = canvas.clientHeight, dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    [["--s1", 0.16], ["--s2", 0.34], ["--s3", 0.53], ["--s4", 0.74]].forEach(([token, top], i) => {
+      const y0 = h * top;
+      const wave = x => Math.sin(x / w * Math.PI * 2 * 1.2 + i * 1.7) * 10 + Math.sin(x / w * Math.PI * 2 * 2.9 + i) * 4;
+      ctx.beginPath();
+      ctx.moveTo(0, y0 + wave(0));
+      for (let x = 0; x <= w; x += 6) ctx.lineTo(x, y0 + wave(x));
+      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
+      ctx.globalAlpha = 0.22 + i * 0.15;
+      ctx.fillStyle = css(token);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+  draw();
+  addEventListener("resize", draw);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();
+</script>
 </body>
 </html>
