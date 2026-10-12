@@ -44,7 +44,7 @@ KDE_PACKAGES = [
     "kdeplasma-addons", "print-manager", "flatpak-kcm", "kwallet-pam",
     "xdg-desktop-portal-kde", "xdg-desktop-portal-gtk",
     "dolphin", "konsole", "kio-extras", "kio-admin", "kate", "ark", "gwenview",
-    "okular", "spectacle", "kcalc", "partitionmanager", "filelight",
+    "okular", "spectacle", "kalk", "partitionmanager", "filelight",
     "ffmpegthumbs", "kdegraphics-thumbnailers",
 ]
 
