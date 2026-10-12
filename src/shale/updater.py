@@ -37,7 +37,7 @@ class Updater(QWidget):
         head.addLayout(head_text, 1)
 
         self.bar = QProgressBar(maximum=1000)
-        self.bar.setStyleSheet("QProgressBar::chunk { background: #cfcfcf; }")
+        self.bar.setStyleSheet(f"QProgressBar::chunk {{ background: {theme.MUTED}; }}")
         self.bar.setVisible(False)
         self.detail = theme.label("", "muted", wrap=False)
         self.detail.setVisible(False)
