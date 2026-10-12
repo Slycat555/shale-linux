@@ -353,7 +353,7 @@ class Installer:
                 "GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell\n\n"
                 "[Wayland]\nCompositorCommand=kwin_wayland --drm --no-lockscreen "
                 "--no-global-shortcuts --locale1\n\n"
-                "[Theme]\nCurrent=breeze\n")
+                "[Theme]\nCurrent=breeze\nCursorTheme=Breeze_Light\n")
         if c.get("autologin"):
             sddm += f"\n[Autologin]\nUser={c['username']}\nSession=plasma\n"
         self.write("/etc/sddm.conf.d/10-shale.conf", sddm)
