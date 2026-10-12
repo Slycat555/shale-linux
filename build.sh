@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Builds the Shale Linux ISO. Must run as root on Arch Linux (or in an Arch container
-# started with --privileged) with `archiso` and `flatpak` installed.
+# started with --privileged) with `archiso`, `flatpak` and the decoration's build
+# dependencies (`base-devel cmake extra-cmake-modules kdecoration`) installed.
 set -euo pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 
@@ -24,6 +25,12 @@ install -d "$A/usr/lib/shale/shale"
 cp src/shale/*.py src/shale/logo.svg "$A/usr/lib/shale/shale/"
 install -Dm644 src/shale/logo.svg "$A/usr/share/pixmaps/shale-logo.svg"
 
+# The Shale window decoration (a C++ KWin plugin).
+DECO_SO=/usr/lib/qt6/plugins/org.kde.kdecoration3/org.shale.decoration.so
+cmake -S decoration -B build/decoration -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+cmake --build build/decoration
+DESTDIR="$PWD/$A" cmake --install build/decoration
+
 # The installer copies everything in this manifest to the new system.
 # (The installer itself is left out; it is only needed on the USB stick.)
 install -d "$A/usr/share/shale"
@@ -34,6 +41,7 @@ install -d "$A/usr/share/shale"
         echo "/usr/lib/shale/shale/$(basename "$f")"
     done
     echo /usr/share/pixmaps/shale-logo.svg
+    echo "$DECO_SO"
 } | sort > "$A/usr/share/shale/overlay-files"
 
 # 2. Live-only: start the installer when the live desktop appears.

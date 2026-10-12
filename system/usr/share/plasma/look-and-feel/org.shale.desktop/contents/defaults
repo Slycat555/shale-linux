@@ -17,8 +17,8 @@ Image=Shale
 cursorTheme=breeze_cursors
 
 [kwinrc][org.kde.kdecoration2]
-library=org.kde.breeze
-theme=Breeze
+library=org.shale.decoration
+theme=Shale
 
 [ksplashrc][KSplash]
 Engine=none

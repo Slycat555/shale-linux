@@ -62,7 +62,7 @@ The installer backend reads the user's choices as JSON on stdin and reports prog
 On Arch Linux:
 
 ```sh
-sudo pacman -S archiso flatpak
+sudo pacman -S archiso flatpak base-devel cmake extra-cmake-modules kdecoration
 sudo ./build.sh
 ```
 
@@ -70,7 +70,7 @@ The ISO appears in `out/`. On any other distro, use a privileged Arch container:
 
 ```sh
 sudo podman run --rm --privileged -v "$PWD":/work -w /work archlinux:latest \
-    bash -c 'pacman -Syu --noconfirm archiso flatpak python && ./build.sh'
+    bash -c 'pacman -Syu --noconfirm archiso flatpak python base-devel cmake extra-cmake-modules kdecoration && ./build.sh'
 ```
 
 GitHub Actions builds the ISO on every push to `main`. Pushing a tag like `v2026.10` publishes a release. The ISO is larger than GitHub's 2 GiB limit, so the release splits it into parts; instructions for joining them are in the release notes.

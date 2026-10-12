@@ -1,4 +1,5 @@
-// Shale Linux default: the Shale logo (made by tools/make-fastfetch-logo.py).
+// Shale Linux default: the Shale logo (made by tools/make-fastfetch-logo.py) next to
+// the system info in three sections, in the logo's slate colours.
 // Copy this file to ~/.config/fastfetch/config.jsonc to customise it.
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
@@ -7,15 +8,50 @@
         "source": "/etc/xdg/fastfetch/shale-logo.txt",
         "width": 32,
         "height": 16,
-        "padding": { "top": 1, "left": 2, "right": 3 }
+        "padding": { "top": 4, "left": 2, "right": 4 }
     },
     "display": {
-        "color": { "keys": "#8a9bb0", "title": "#c3cfdc" }
+        "separator": "  ",
+        "key": { "width": 11 },
+        "color": {
+            "keys": "38;2;138;155;176",
+            "title": "38;2;195;207;220",
+            "output": "38;2;220;226;233"
+        },
+        "size": { "binaryPrefix": "iec", "ndigits": 1 },
+        "percent": { "color": { "green": "38;2;138;155;176", "yellow": "33", "red": "31" } }
     },
     "modules": [
-        "title", "separator", "os", "host", "kernel", "uptime", "packages", "shell",
-        "display", "de", "wm", "theme", "icons", "font", "terminal", "cpu", "gpu",
-        "memory", "swap", "disk", "localip", "battery", "poweradapter", "locale",
-        "break", "colors"
+        { "type": "title", "format": "{#1;38;2;195;207;220}{user-name}{#0;38;2;95;113;135}@{#1;38;2;195;207;220}{host-name}" },
+        { "type": "custom", "format": "{#38;2;67;83;106}────────────────────────────────────────" },
+
+        { "type": "custom", "format": "{#1;38;2;195;207;220}System" },
+        { "type": "os", "key": "  OS" },
+        { "type": "kernel", "key": "  Kernel" },
+        { "type": "uptime", "key": "  Uptime" },
+        { "type": "packages", "key": "  Packages" },
+        { "type": "shell", "key": "  Shell" },
+        { "type": "terminal", "key": "  Terminal" },
+        "break",
+
+        { "type": "custom", "format": "{#1;38;2;195;207;220}Desktop" },
+        { "type": "de", "key": "  Desktop" },
+        { "type": "wm", "key": "  Windows" },
+        { "type": "theme", "key": "  Theme", "format": "{theme1}" },
+        { "type": "icons", "key": "  Icons", "format": "{icons1}" },
+        { "type": "font", "key": "  Font", "format": "{font1}" },
+        { "type": "display", "key": "  Display", "compactType": "original-with-refresh-rate" },
+        "break",
+
+        { "type": "custom", "format": "{#1;38;2;195;207;220}Hardware" },
+        { "type": "host", "key": "  Machine" },
+        { "type": "cpu", "key": "  CPU", "showPeCoreCount": true },
+        { "type": "gpu", "key": "  GPU", "hideType": "integrated" },
+        { "type": "memory", "key": "  Memory" },
+        { "type": "disk", "key": "  Disk", "folders": "/" },
+        { "type": "battery", "key": "  Battery" },
+        "break",
+
+        { "type": "colors", "symbol": "circle", "paddingLeft": 0 }
     ]
 }

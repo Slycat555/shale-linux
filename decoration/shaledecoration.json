@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Id": "org.shale.decoration",
+        "Name": "Shale",
+        "Description": "Windows-style title bar: full-height caption buttons with a red close button",
+        "License": "GPL-3.0-or-later"
+    },
+    "org.kde.kdecoration3": {
+        "blur": false,
+        "kcmodule": false,
+        "recommendedBorderSize": "None"
+    }
+}

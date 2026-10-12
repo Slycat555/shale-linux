@@ -1,2 +1,10 @@
+[Effect-overview]
+BorderActivate=9
+
+[Plugins]
+shakecursorEnabled=false
+
 [org.kde.kdecoration2]
 ButtonsOnLeft=
+library=org.shale.decoration
+theme=Shale
