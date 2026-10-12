@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Shale user setup
+Exec=/usr/lib/shale/shale-user-setup
+OnlyShowIn=KDE;
+NoDisplay=true
+X-KDE-autostart-phase=1

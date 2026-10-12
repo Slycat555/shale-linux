@@ -1,0 +1,11 @@
+NAME="Shale Linux"
+PRETTY_NAME="Shale Linux"
+ID=shale
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;138;155;176"
+HOME_URL="https://github.com/slycat555/shale-linux"
+DOCUMENTATION_URL="https://github.com/slycat555/shale-linux#readme"
+SUPPORT_URL="https://github.com/slycat555/shale-linux/issues"
+BUG_REPORT_URL="https://github.com/slycat555/shale-linux/issues"
+LOGO=shale-logo

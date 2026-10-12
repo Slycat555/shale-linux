@@ -1,0 +1,17 @@
+#!/bin/sh
+# Per-user Shale defaults, run at every Plasma login.
+
+# Keep libadwaita/GTK 4 apps in the KDE colour scheme: install Shale's colour mapping
+# next to kde-gtk-config's colors.css and import it from gtk.css.
+dir="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-4.0"
+mkdir -p "$dir"
+cp -f /usr/share/shale/gtk-4.0/shale-adwaita.css "$dir/shale-adwaita.css"
+[ -f "$dir/gtk.css" ] || printf "@import 'colors.css';\n" > "$dir/gtk.css"
+[ -n "$(tail -c1 "$dir/gtk.css")" ] && echo >> "$dir/gtk.css"
+grep -q "shale-adwaita.css" "$dir/gtk.css" ||
+    printf "@import 'shale-adwaita.css';\n" >> "$dir/gtk.css"
+
+# Bazaar must not linger in the background (and so in the system tray) after its
+# window is closed; Shale Update handles updates instead.
+flatpak permission-set background background io.github.kolunmi.Bazaar no 2>/dev/null
+exit 0

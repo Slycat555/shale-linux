@@ -39,8 +39,8 @@ SLIDES = [
      "Plays almost any video or music file you throw at it, with no extra downloads."),
     ("org.kde.gwenview", "image-x-generic", "Gwenview",
      "Browse, view and touch up your photos."),
-    ("org.mozilla.firefox", "internet-web-browser", "Firefox",
-     "A fast web browser that protects your privacy."),
+    ("chromium", "internet-web-browser", "Chromium",
+     "A fast, secure web browser."),
     ("system-software-update", "system-software-update", "Easy updates",
      "Open Software Update from the app menu to keep everything current, "
      "with one click."),
@@ -693,7 +693,7 @@ class ReadyPage(Page):
             self.gpu.addItem(data.GPU_LABELS[key], key)
         self.gpu.setCurrentIndex(self.gpu.findData(detect_gpu()))
         self.box.addWidget(label("You'll get KDE Plasma with Bazaar, LibreOffice, VLC, "
-                                 "Gwenview and Firefox, all ready to use.", "muted"))
+                                 "Gwenview and Chromium, all ready to use.", "muted"))
         self.box.addStretch()
 
     def enter(self):

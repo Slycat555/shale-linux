@@ -26,4 +26,5 @@ file_permissions=(
   ["/usr/lib/shale/shale-install-backend"]="0:0:755"
   ["/usr/lib/shale/shale-update-helper"]="0:0:755"
   ["/usr/lib/shale/shale-firstboot"]="0:0:755"
+  ["/usr/lib/shale/shale-user-setup"]="0:0:755"
 )

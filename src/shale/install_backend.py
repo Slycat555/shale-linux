@@ -374,6 +374,8 @@ class Installer:
                 dest = TARGET + path
                 os.makedirs(os.path.dirname(dest), exist_ok=True)
                 shutil.copy2(path, dest, follow_symlinks=False)
+        # From now on the shale-os-release pacman hook keeps this in place.
+        shutil.copy2("/usr/share/shale/os-release", TARGET + "/usr/lib/os-release")
 
     def configure_boot(self):
         hooks = ["base", "systemd", "plymouth", "autodetect", "microcode", "modconf",

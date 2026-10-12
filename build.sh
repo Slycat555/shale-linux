@@ -42,11 +42,19 @@ install -Dm644 "$A/usr/share/applications/shale-installer.desktop" \
 
 # 3. Pre-install the default Flatpaks so they work offline, in the live session and
 #    after installing (the installer copies /var/lib/flatpak).
+#    mkarchiso copies airootfs with `cp --no-preserve=mode`, which would strip the
+#    executable bits from every runtime (bwrap then fails with "execvp ldconfig:
+#    Permission denied"). So they are installed outside airootfs and shipped as a tar,
+#    which the 00-shale-flatpak.hook pacman hook unpacks inside the pacstrap chroot.
 mapfile -t FLATPAKS < <(python3 -c 'import sys; sys.path.insert(0, "src"); from shale import data; print("\n".join(data.FLATPAKS))')
-export FLATPAK_SYSTEM_DIR="$PWD/$A/var/lib/flatpak"
+FLATPAK_STAGE=build/flatpak
+rm -rf "$FLATPAK_STAGE"
+export FLATPAK_SYSTEM_DIR="$PWD/$FLATPAK_STAGE"
 flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install --system -y --noninteractive flathub "${FLATPAKS[@]}"
 unset FLATPAK_SYSTEM_DIR
+install -d "$A/var/lib/shale"
+tar -cf "$A/var/lib/shale/flatpak.tar" --numeric-owner -C "$FLATPAK_STAGE" .
 
 mkarchiso -v -r -w "$WORK" -o "$OUT" "$PROFILE"
 echo

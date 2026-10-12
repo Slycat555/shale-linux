@@ -1,5 +1,5 @@
 // Shale Linux default desktop: Shale wallpaper and a solid (non-floating) bottom
-// panel with Bazaar, Firefox and Files pinned to the task manager.
+// panel with Bazaar, Chromium and Files pinned to the task manager.
 
 var desktopsArray = desktopsForActivity(currentActivity());
 for (var j = 0; j < desktopsArray.length; j++) {
@@ -24,7 +24,7 @@ var tasks = panel.addWidget("org.kde.plasma.icontasks");
 tasks.currentConfigGroup = ["General"];
 tasks.writeConfig("launchers", [
     "applications:io.github.kolunmi.Bazaar.desktop",
-    "applications:org.mozilla.firefox.desktop",
+    "applications:chromium.desktop",
     "applications:org.kde.dolphin.desktop",
     "applications:libreoffice-writer.desktop"
 ].join(","));

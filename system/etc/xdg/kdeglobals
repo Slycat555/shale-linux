@@ -136,6 +136,7 @@ ForegroundVisited=155,89,182
 ColorScheme=ShaleDark
 Name=Shale Dark
 shadeSortColumn=true
+BrowserApplication=chromium.desktop
 
 [KDE]
 contrast=4

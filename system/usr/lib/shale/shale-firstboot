@@ -3,7 +3,7 @@
 # are copied from the installer USB stick, so this only runs as a fallback).
 # Keep this list in sync with FLATPAKS in src/shale/data.py.
 set -u
-APPS=(io.github.kolunmi.Bazaar org.mozilla.firefox)
+APPS=(io.github.kolunmi.Bazaar)
 DONE=/var/lib/shale/firstboot-done
 
 for _ in $(seq 60); do

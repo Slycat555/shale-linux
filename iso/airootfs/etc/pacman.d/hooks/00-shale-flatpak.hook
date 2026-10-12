@@ -1,0 +1,15 @@
+# remove from airootfs!
+# Unpacks the Flatpaks pre-installed by build.sh. They are shipped as a tar because
+# mkarchiso copies airootfs without file modes, which breaks the Flatpak runtimes.
+
+[Trigger]
+Operation = Install
+Type = Package
+Target = flatpak
+
+[Action]
+Description = Unpacking the pre-installed Flatpaks...
+When = PostTransaction
+Depends = sh
+Depends = tar
+Exec = /bin/sh -c "[ -f /var/lib/shale/flatpak.tar ] || exit 0; install -d /var/lib/flatpak && tar -xpf /var/lib/shale/flatpak.tar --numeric-owner -C /var/lib/flatpak && rm -f /var/lib/shale/flatpak.tar"

@@ -9,7 +9,6 @@ FLATHUB_REPO = "https://dl.flathub.org/repo/flathub.flatpakrepo"
 # to the new system, so they work without an internet connection.
 FLATPAKS = [
     "io.github.kolunmi.Bazaar",  # app store
-    "org.mozilla.firefox",       # web browser
 ]
 
 # Kernel options for a quiet, logo-free boot straight into the desktop.
@@ -22,7 +21,7 @@ BASE_PACKAGES = [
     "networkmanager", "plymouth", "zram-generator",
     "e2fsprogs", "dosfstools", "exfatprogs", "ntfs-3g", "cryptsetup",
     "pacman-contrib", "reflector", "fwupd", "power-profiles-daemon",
-    "xdg-user-dirs", "7zip", "unzip", "zip", "curl", "rsync",
+    "xdg-user-dirs", "fastfetch", "7zip", "unzip", "zip", "curl", "rsync",
     # Shale's own tools (updater) are written in Python + Qt
     "python", "pyside6", "qt6-svg",
     # Audio
@@ -41,13 +40,13 @@ KDE_PACKAGES = [
     "systemsettings", "kinfocenter", "plasma-systemmonitor", "plasma-disks",
     "kdeplasma-addons", "print-manager", "flatpak-kcm", "kwallet-pam",
     "xdg-desktop-portal-kde", "xdg-desktop-portal-gtk",
-    "dolphin", "kio-extras", "kio-admin", "kate", "ark", "gwenview",
+    "dolphin", "konsole", "kio-extras", "kio-admin", "kate", "ark", "gwenview",
     "okular", "spectacle", "kcalc", "partitionmanager", "filelight",
     "ffmpegthumbs", "kdegraphics-thumbnailers",
 ]
 
 # Everyday apps (also on the live USB).
-APP_PACKAGES = ["vlc", "vlc-plugins-all", "libreoffice-fresh"]
+APP_PACKAGES = ["chromium", "vlc", "vlc-plugins-all", "libreoffice-fresh"]
 
 GPU_PACKAGES = {
     "amd": ["mesa", "lib32-mesa", "vulkan-radeon", "lib32-vulkan-radeon"],

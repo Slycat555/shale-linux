@@ -9,11 +9,11 @@ Boot the USB stick, click through a short installer and you get a complete deskt
 | | |
 |---|---|
 | **Desktop** | KDE Plasma 6 (Wayland) with the Shale Dark theme (#1e1e1e) and Shale wallpaper on the desktop, lock screen and login screen |
-| **Panel** | Solid (non-floating) bottom panel with Bazaar, Firefox, Files and LibreOffice pinned |
+| **Panel** | Solid (non-floating) bottom panel with Bazaar, Chromium, Files and LibreOffice pinned |
 | **Graphics** | AMD by default (Mesa + RADV Vulkan, 32-bit libraries for games). Intel and NVIDIA are detected and offered automatically. |
 | **Audio** | PipeWire (with PulseAudio, ALSA and JACK compatibility) |
 | **Bluetooth** | Enabled and switched on automatically |
-| **Apps** | Flatpak + Flathub out of the box, plus **[Bazaar](https://github.com/kolunmi/bazaar)** (app store), **LibreOffice**, **VLC**, **Gwenview** and **Firefox** |
+| **Apps** | Flatpak + Flathub out of the box, plus **[Bazaar](https://github.com/kolunmi/bazaar)** (app store), **LibreOffice**, **VLC**, **Gwenview** and **Chromium** |
 | **Updates** | **Software Update** updates the system and all apps with one click and a progress bar. Admin users don't need a password. |
 | **Boot** | Silent: no boot menu, no scrolling text, no Arch logo. Just the computer maker's logo and a spinner. |
 | **Extras** | zram swap, printing, firmware updates (fwupd), optional full-disk encryption |
@@ -29,7 +29,7 @@ Under the hood it's plain Arch Linux, using the official Arch repositories. The 
 
 > ⚠ The installer uses the **whole disk** you choose and erases everything on it.
 
-Bazaar and Firefox are copied from the USB stick. Everything else is downloaded fresh while installing, so an internet connection is required.
+Bazaar is copied from the USB stick. Everything else is downloaded fresh while installing, so an internet connection is required.
 
 ## How it's put together
 
@@ -44,7 +44,7 @@ src/shale/                    Shale's own apps (Python + Qt)
 system/                       files for the live USB *and* every installed system:
                               theme, wallpaper, panel layout, boot splash, updater
 iso/                          archiso profile (based on Arch's releng); live-only bits
-tools/                        scripts that generated the color scheme, wallpaper and boot logo
+tools/                        scripts that generated the logo, color scheme, wallpaper, boot logo and fastfetch logo
 ```
 
 The installer backend reads the user's choices as JSON on stdin and reports progress as JSON lines. It:

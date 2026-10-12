@@ -1,0 +1,13 @@
+# Arch's filesystem package ships /usr/lib/os-release; put Shale's back after it.
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = filesystem
+
+[Action]
+Description = Setting the Shale Linux os-release...
+When = PostTransaction
+Depends = coreutils
+Exec = /usr/bin/cp -f /usr/share/shale/os-release /usr/lib/os-release

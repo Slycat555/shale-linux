@@ -74,6 +74,8 @@ sddm
 systemsettings
 xdg-desktop-portal-kde
 dolphin
+konsole
+fastfetch
 kate
 partitionmanager
 spectacle
@@ -86,6 +88,7 @@ noto-fonts-cjk
 gwenview
 vlc
 vlc-plugins-all
+chromium
 libreoffice-fresh
 okular
 ark
