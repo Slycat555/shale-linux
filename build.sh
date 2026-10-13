@@ -67,6 +67,8 @@ rm -rf "$FLATPAK_STAGE"
 export FLATPAK_SYSTEM_DIR="$PWD/$FLATPAK_STAGE"
 flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install --system -y --noninteractive flathub "${FLATPAKS[@]}"
+# Flathub's app catalogue (appstream), so Bazaar can list apps straight away, even offline.
+flatpak update --system -y --noninteractive --appstream flathub
 unset FLATPAK_SYSTEM_DIR
 install -d "$A/var/lib/shale"
 tar -cf "$A/var/lib/shale/flatpak.tar" --numeric-owner -C "$FLATPAK_STAGE" .
