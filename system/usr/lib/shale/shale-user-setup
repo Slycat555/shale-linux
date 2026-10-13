@@ -23,6 +23,19 @@ grep -q "/usr/share/shale/bashrc" "$rc" ||
 # The terminal and the login screen don't follow the colour scheme by themselves.
 /usr/lib/shale/shale-match-theme
 
+# Prefer colour accuracy over power efficiency on each screen, the first time it's seen
+# (later changes in Display Settings are kept): the efficiency mode hands video to the
+# GPU's overlay planes, which can make it flicker on some AMD cards.
+seen="${XDG_CONFIG_HOME:-$HOME/.config}/shale/color-accuracy-outputs"
+mkdir -p "${seen%/*}"
+touch "$seen"
+kscreen-doctor -o 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | awk '/^Output:/ { print $3 }' |
+while read -r out; do
+    grep -qx "$out" "$seen" && continue
+    kscreen-doctor "output.$out.colorPowerTradeoff.preferAccuracy" >/dev/null 2>&1 &&
+        echo "$out" >> "$seen"
+done
+
 # Bazaar must not linger in the background (and so in the system tray) after its
 # window is closed; Shale Update handles updates instead.
 flatpak permission-set background background io.github.kolunmi.Bazaar no 2>/dev/null
