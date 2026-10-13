@@ -58,6 +58,7 @@ pipewire-alsa
 pipewire-pulse
 pipewire-jack
 wireplumber
+rtkit
 
 # ---- KDE Plasma live desktop ----
 plasma-desktop
