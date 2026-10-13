@@ -20,7 +20,7 @@
   --raised: #1e1e1e;       /* cards, panels: Shale Dark */
   --seam: #2e2e2e;         /* borders */
   --ink: #ececec;          /* text */
-  --soft: #a3a3a3;         /* secondary text */
+  --soft: #b8b8b8;         /* secondary text: bright enough to read easily on the dark page */
   --mist: #c3cfdc;         /* accent: the logo's top stratum */
   --on-mist: #15191f;
   --blue: #3584e4;         /* buttons: Shale's accent, as in its own apps */
@@ -35,7 +35,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.125rem/1.7 var(--body); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-underline-offset: 3px; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--mist); outline-offset: 3px; border-radius: 6px; }
 .wrap { max-width: 1100px; margin-inline: auto; padding-inline: 20px; }
@@ -43,7 +43,7 @@ h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-
 h2 { font-size: clamp(2rem, 4.2vw, 2.9rem); font-weight: 700; line-height: 1.08; }
 h3 { font-size: 1.25rem; font-weight: 650; line-height: 1.25; }
 p { margin: 0; }
-.lede { color: var(--soft); font-size: 1.15rem; max-width: 56ch; }
+.lede { color: var(--soft); font-size: 1.2rem; line-height: 1.65; max-width: 60ch; }
 .kicker { font: 600 0.95rem/1 var(--body); color: var(--soft); }
 
 /* nav */
@@ -88,10 +88,10 @@ p { margin: 0; }
 /* sections */
 .section { padding-block: 92px; }
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
-.split.wide-pic { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+.split.wide-pic { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 48px; }
 .stack { display: grid; gap: 18px; }
 .shot { width: 100%; height: auto; display: block; }
-.caption { color: var(--soft); font-size: 0.9rem; margin-top: 10px; }
+.caption { color: var(--soft); font-size: 0.95rem; margin-top: 12px; }
 
 /* everyday */
 .everyday { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
@@ -100,7 +100,7 @@ p { margin: 0; }
 .app-ico { width: 64px; height: 64px; display: block; }
 .traits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
 .trait-ico { width: 30px; height: 30px; color: var(--mist); margin-bottom: 6px; }
-.task p { color: var(--soft); }
+.task p { color: var(--soft); line-height: 1.6; }
 .task .app { margin-top: 6px; font-size: 0.88rem; }
 .task .app b { color: var(--ink); font-weight: 600; }
 
@@ -113,7 +113,7 @@ p { margin: 0; }
 .undo-steps b { color: var(--ink); font-weight: 600; display: block; }
 
 /* big screenshots */
-.big-shot { display: block; width: min(100%, 720px); height: auto; margin: 44px auto 0; }
+.big-shot { display: block; width: min(100%, 560px); height: auto; margin: 44px auto 0; }
 .solo { max-width: 560px; margin: 44px auto 0; }
 .solo .caption { text-align: center; }
 
@@ -139,7 +139,7 @@ p { margin: 0; }
 .steps { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
 .steps li { counter-increment: s; background: var(--raised); border: 1px solid var(--seam); border-radius: 18px; padding: 24px; display: grid; gap: 8px; align-content: start; }
 .steps li::before { content: counter(s); width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--blue); color: #ffffff; font: 700 1rem/1 var(--display); }
-.steps p { color: var(--soft); }
+.steps p { color: var(--soft); line-height: 1.6; }
 .need { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
 .note { border-radius: 14px; padding: 18px 20px; border: 1px solid var(--seam); }
 .note b { display: block; margin-bottom: 4px; }
@@ -154,7 +154,7 @@ summary { cursor: pointer; list-style: none; padding-block: 16px; font: 600 1.1r
 summary::-webkit-details-marker { display: none; }
 summary::after { content: "+"; font: 400 1.5rem/1 var(--display); color: var(--soft); transition: transform .15s; }
 details[open] summary::after { transform: rotate(45deg); }
-details p { color: var(--soft); padding-bottom: 18px; max-width: 64ch; }
+details p { color: var(--soft); padding-bottom: 18px; max-width: 64ch; line-height: 1.7; }
 
 /* curious */
 .curious { border-top: 1px solid var(--seam); }
