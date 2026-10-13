@@ -10,17 +10,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600&display=swap">
 <style>
-/* Layout: a calm, friendly walk-through. A big welcoming hero over soft wavy strata,
-   then one idea per section, alternating text and pictures, ending in a plain FAQ.
-   The desktop's own colours (#1e1e1e, like Shale Dark) with the logo's slate as the
-   accent. Deliberately dark only, like the desktop itself. */
+/* Layout: a calm, friendly walk-through that shows the desktop itself. A welcoming
+   hero with a big real screenshot over soft wavy strata, a theme switcher, then one idea
+   per section, ending in a plain FAQ. Warm, soft greys with gentle colour glows, the
+   logo's slate and Shale's blue as accents. Dark only, like the desktop's default. */
 :root {
   color-scheme: dark;
-  --ground: #161616;       /* page: a step darker than Shale Dark */
-  --raised: #1e1e1e;       /* cards, panels: Shale Dark */
-  --seam: #2e2e2e;         /* borders */
-  --ink: #ececec;          /* text */
-  --soft: #a3a3a3;         /* secondary text */
+  --ground: #16151a;       /* page: a soft, slightly warm near-black */
+  --raised: rgb(255 255 255 / .04);  /* cards, panels */
+  --seam: rgb(255 255 255 / .08);    /* borders */
+  --ink: #ebe7e2;          /* text: warm off-white, easier on the eyes */
+  --soft: #aaa4ac;         /* secondary text */
+  --glow-blue: rgb(53 132 228 / .20);
+  --glow-peach: rgb(242 169 126 / .13);
+  --glow-lilac: rgb(155 109 200 / .14);
+  --peach: #f2b48f;
   --mist: #c3cfdc;         /* accent: the logo's top stratum */
   --on-mist: #15191f;
   --blue: #3584e4;         /* buttons: Shale's accent, as in its own apps */
@@ -35,16 +39,21 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(60rem 40rem at 85% -5%, var(--glow-blue), transparent 70%),
+                    radial-gradient(50rem 36rem at 0% 30%, var(--glow-lilac), transparent 70%),
+                    radial-gradient(56rem 40rem at 100% 65%, var(--glow-peach), transparent 70%),
+                    radial-gradient(50rem 36rem at 10% 95%, var(--glow-blue), transparent 70%);
+  background-repeat: no-repeat; }
 a { color: inherit; text-underline-offset: 3px; }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--mist); outline-offset: 3px; border-radius: 6px; }
 .wrap { max-width: 1100px; margin-inline: auto; padding-inline: 20px; }
 h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.015em; }
-h2 { font-size: clamp(2rem, 4.2vw, 2.9rem); font-weight: 700; line-height: 1.08; }
+h2 { font-size: clamp(2rem, 4.2vw, 2.9rem); font-weight: 650; line-height: 1.1; }
 h3 { font-size: 1.25rem; font-weight: 650; line-height: 1.25; }
 p { margin: 0; }
 .lede { color: var(--soft); font-size: 1.15rem; max-width: 56ch; }
-.kicker { font: 600 0.95rem/1 var(--body); color: var(--soft); }
+.kicker { display: inline-block; justify-self: start; font: 600 0.9rem/1 var(--body); color: var(--peach); background: rgb(242 180 143 / .1); border: 1px solid rgb(242 180 143 / .22); padding: 7px 12px; border-radius: 999px; }
 
 /* nav */
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
@@ -56,8 +65,13 @@ p { margin: 0; }
 
 /* hero */
 .hero { position: relative; overflow: hidden; }
-.hero-in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 40px; align-items: center; padding-block: 48px 220px; }
-.hero h1 { font-size: clamp(2.8rem, 6.6vw, 5rem); font-weight: 800; line-height: 1.02; letter-spacing: -0.03em; }
+.hero-in { position: relative; z-index: 1; display: grid; justify-items: center; text-align: center; padding-block: 40px 0; }
+.hero-in .lede { margin-inline: auto; }
+.hero-in .cta, .hero-in .reassure { justify-content: center; }
+.hero h1 { font-size: clamp(2.6rem, 6.2vw, 4.6rem); font-weight: 750; line-height: 1.04; letter-spacing: -0.03em; max-width: 16ch; }
+.showcase { position: relative; z-index: 1; margin: 56px auto 0; max-width: 1100px; padding-bottom: 120px; }
+.screen { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid rgb(255 255 255 / .1);
+  box-shadow: 0 2px 0 rgb(255 255 255 / .04) inset, 0 40px 90px -20px rgb(0 0 0 / .65), 0 0 0 10px rgb(255 255 255 / .03); }
 .hero .lede { margin-top: 22px; font-size: 1.25rem; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 14px; font: 600 1.05rem/1 var(--body); text-decoration: none; border: 1px solid var(--seam); color: var(--ink); background: var(--raised); transition: border-color .15s, transform .15s; }
@@ -70,9 +84,17 @@ p { margin: 0; }
 .reassure { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; color: var(--soft); font-size: 0.95rem; list-style: none; padding: 0; }
 .reassure li { display: flex; align-items: center; gap: 7px; }
 .reassure li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--good); }
-.hero-mark { justify-self: center; width: min(100%, 340px); aspect-ratio: 1; max-width: 100%; }
-.hero-mark svg { width: 100%; height: 100%; filter: drop-shadow(0 26px 44px rgb(0 0 0 / .35)); }
-#strata { position: absolute; inset: auto 0 0 0; width: 100%; height: 200px; display: block; }
+#strata { position: absolute; inset: auto 0 0 0; width: 100%; height: 340px; display: block; }
+
+/* themes */
+.themes { text-align: center; }
+.themes .lede { margin: 18px auto 0; }
+.tabs { display: inline-flex; gap: 6px; margin-top: 30px; padding: 6px; border-radius: 999px; background: var(--raised); border: 1px solid var(--seam); }
+.tabs button { font: 600 1rem/1 var(--body); color: var(--soft); background: none; border: 0; padding: 12px 20px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 9px; }
+.tabs button i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgb(255 255 255 / .35); }
+.tabs button[aria-selected="true"] { background: var(--blue); color: #fff; }
+.tabs button:hover:not([aria-selected="true"]) { color: var(--ink); }
+.themes .screen { margin-top: 34px; }
 
 /* sections */
 .section { padding-block: 92px; }
@@ -84,7 +106,7 @@ p { margin: 0; }
 
 /* everyday */
 .everyday { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
-.task { background: var(--raised); border: 1px solid var(--seam); border-radius: 18px; padding: 24px; display: grid; gap: 8px; align-content: start; }
+.task { background: var(--raised); border: 1px solid var(--seam); border-radius: 22px; padding: 24px; display: grid; gap: 8px; align-content: start; }
 .task .ico { width: 52px; height: 52px; display: block; margin-bottom: 4px; }
 .app-ico { width: 64px; height: 64px; display: block; }
 .traits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
@@ -94,7 +116,7 @@ p { margin: 0; }
 .task .app b { color: var(--ink); font-weight: 600; }
 
 /* undo */
-.undo { background: var(--raised); border: 1px solid var(--seam); border-radius: 24px; padding: clamp(24px, 5vw, 56px); }
+.undo { background: linear-gradient(160deg, rgb(53 132 228 / .1), rgb(155 109 200 / .07) 50%, rgb(242 169 126 / .06)); border: 1px solid var(--seam); border-radius: 30px; padding: clamp(24px, 5vw, 56px); }
 .undo-steps { display: grid; gap: 16px; list-style: none; margin: 0; padding: 0; }
 .undo-steps li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start; }
 .num { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--blue); color: #ffffff; font: 700 1rem/1 var(--display); }
@@ -108,7 +130,7 @@ p { margin: 0; }
 
 /* familiar */
 .split.desk-split { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); }
-.desktop-shot { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--seam); box-shadow: 0 24px 60px rgb(0 0 0 / .45); }
+.desktop-shot { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid rgb(255 255 255 / .1); box-shadow: 0 30px 70px -18px rgb(0 0 0 / .6); }
 .mock { border-radius: 10px; overflow: hidden; background: #1e1e1e; box-shadow: 0 0 0 1px rgb(0 0 0 / .6), 0 22px 50px rgb(0 0 0 / .3); color: #e8ecf1; }
 .mock .bar { display: flex; height: 34px; align-items: stretch; font: 400 0.85rem/34px var(--body); }
 .mock .bar .t { flex: 1; padding-inline: 14px; color: #cfd6de; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -129,7 +151,7 @@ p { margin: 0; }
 
 /* get */
 .steps { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
-.steps li { counter-increment: s; background: var(--raised); border: 1px solid var(--seam); border-radius: 18px; padding: 24px; display: grid; gap: 8px; align-content: start; }
+.steps li { counter-increment: s; background: var(--raised); border: 1px solid var(--seam); border-radius: 22px; padding: 24px; display: grid; gap: 8px; align-content: start; }
 .steps li::before { content: counter(s); width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--blue); color: #ffffff; font: 700 1rem/1 var(--display); }
 .steps p { color: var(--soft); }
 .need { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
@@ -160,14 +182,15 @@ footer .brand { color: var(--ink); }
 
 @media (max-width: 880px) {
   .hero-in, .split, .split.wide-pic, .split.desk-split, .curious .wrap, .need { grid-template-columns: minmax(0, 1fr); }
-  .hero-in { padding-block: 24px 190px; }
-  .hero-mark { width: 180px; justify-self: start; grid-row: 1; }
+  .hero-in { padding-block: 24px 0; }
+  .showcase { margin-top: 36px; padding-bottom: 80px; }
   .everyday, .steps, .traits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section { padding-block: 64px; }
 }
 @media (max-width: 560px) {
   .everyday, .steps, .traits { grid-template-columns: minmax(0, 1fr); }
   .nav ul { display: none; }
+  .tabs button { padding: 10px 13px; font-size: 0.92rem; }
   .mock .win { grid-template-columns: 90px minmax(0, 1fr); }
   .mock .main { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -195,6 +218,7 @@ footer .brand { color: var(--ink); }
     <nav class="nav" aria-label="Main">
       <a class="brand" href="#top" id="top"><svg viewBox="0 0 128 128" aria-hidden="true"><use href="#shale-mark"/></svg>Shale Linux</a>
       <ul>
+        <li><a href="#themes">Themes</a></li>
         <li><a href="#apps">Apps</a></li>
         <li><a href="#undo">Peace of mind</a></li>
         <li><a href="#get">Get Shale</a></li>
@@ -202,25 +226,39 @@ footer .brand { color: var(--ink); }
       </ul>
     </nav>
     <div class="hero-in">
-      <div>
-        <h1>A calm, friendly home for your computer</h1>
-        <p class="lede">Shale is an operating system for your PC, like Windows or macOS. Install it once and everything is ready: your browser, office apps, music and games. No tech skills needed.</p>
-        <div class="cta">
-          <a class="btn primary" href="#get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Get Shale, it's free</a>
-          <a class="btn" href="#apps">See what's inside</a>
-        </div>
-        <ul class="reassure">
-          <li>Easy to install</li>
-          <li>No ads, tracking or accounts</li>
-        </ul>
+      <h1>A calm, friendly home for your computer</h1>
+      <p class="lede" style="margin-top:22px">Shale is an operating system for your PC, like Windows or macOS. Install it once and everything is ready: your browser, office apps, music and games. No tech skills needed.</p>
+      <div class="cta">
+        <a class="btn primary" href="#get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Get Shale, it's free</a>
+        <a class="btn" href="#themes">See the desktop</a>
       </div>
-      <div class="hero-mark"><svg viewBox="0 0 128 128" role="img" aria-label="The Shale logo: soft grey layers of rock inside a circle"><use href="#shale-mark"/></svg></div>
+      <ul class="reassure">
+        <li>Easy to install</li>
+        <li>No ads, tracking or accounts</li>
+      </ul>
+    </div>
+    <div class="showcase">
+      <img class="screen" src="shots/dark.webp" width="1920" height="1080" alt="The Shale desktop with a terminal showing the Shale logo, the Files app and the Calculator open over the layered grey wallpaper, with the taskbar along the bottom">
     </div>
   </div>
   <canvas id="strata" aria-hidden="true"></canvas>
 </header>
 
 <main>
+  <section class="section themes" id="themes">
+    <div class="wrap">
+      <p class="kicker">Make it yours</p>
+      <h2 style="margin-top:14px">Light, dark or darker</h2>
+      <p class="lede">Pick a look in Settings and the whole desktop follows: windows, the taskbar, the wallpaper and even the terminal.</p>
+      <div class="tabs" role="tablist" aria-label="Desktop themes">
+        <button role="tab" aria-selected="false" data-shot="dark" data-alt="The Shale desktop in the Shale theme, dark grey"><i style="background:#1e1e1e"></i>Shale</button>
+        <button role="tab" aria-selected="false" data-shot="darker" data-alt="The Shale desktop in the Shale Darker theme, a deeper near-black grey"><i style="background:#141414"></i>Shale Darker</button>
+        <button role="tab" aria-selected="true" data-shot="light" data-alt="The Shale desktop in the Shale Light theme, with a light wallpaper, light windows and a light terminal"><i style="background:#eff0f1"></i>Shale Light</button>
+      </div>
+      <img class="screen" id="theme-shot" src="shots/light.webp" width="1920" height="1080" alt="The Shale desktop in the Shale Light theme, with a light wallpaper, light windows and a light terminal" role="tabpanel">
+    </div>
+  </section>
+
   <section class="section" id="light">
     <div class="wrap">
       <p class="kicker">Light by design</p>
@@ -317,8 +355,8 @@ footer .brand { color: var(--ink); }
   <section class="section">
     <div class="wrap split desk-split">
       <div>
-        <img class="desktop-shot" src="desktop.jpg" width="1920" height="1080" alt="The Shale desktop: the Bazaar app store showing its colourful categories and the Calculator, over the grey layered wallpaper, with the taskbar and start button along the bottom">
-        <p class="caption">The Shale desktop, with Bazaar and Calculator open.</p>
+        <img class="desktop-shot" src="shots/menu.webp" width="1920" height="1080" alt="The Shale start menu open in the bottom corner, with Chromium, Files, Calculator, Bazaar, LibreOffice Writer, Software Update and Shale Snapshots in its favourites">
+        <p class="caption">The start menu, right where you'd look for it.</p>
       </div>
       <div class="stack">
         <p class="kicker">Feels familiar</p>
@@ -387,6 +425,17 @@ footer .brand { color: var(--ink); }
 </footer>
 
 <script>
+(() => {
+  // Theme switcher: swap the screenshot when a tab is picked.
+  const shot = document.getElementById("theme-shot");
+  const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+  tabs.forEach(tab => tab.addEventListener("click", () => {
+    tabs.forEach(t => t.setAttribute("aria-selected", String(t === tab)));
+    shot.src = `shots/${tab.dataset.shot}.webp`;
+    shot.alt = tab.dataset.alt;
+  }));
+  tabs.forEach(t => { const i = new Image(); i.src = `shots/${t.dataset.shot}.webp`; });
+})();
 (() => {
   // Soft wavy strata across the bottom of the hero, in the logo's colours.
   const canvas = document.getElementById("strata");

@@ -59,7 +59,7 @@ scheme=$(echo "$palette" | awk -v bg="$bg" -v fg="$fg" -v intense="$intense" '
         print "[Color" n "]\nColor=" $1 "\n[Color" n "Intense]\nColor=" $2
         print "[Color" n "Faint]\nColor=" $3
     }')
-# Only rewrite when something changed, so open terminals aren't reloaded for nothing.
+# Konsole reads these when a window opens; windows already open keep their colours.
 [ "$scheme" = "$(cat "$dir/ShaleTheme.colorscheme" 2>/dev/null)" ] ||
     printf '%s\n' "$scheme" > "$dir/ShaleTheme.colorscheme"
 
@@ -76,14 +76,6 @@ case "$(kreadconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfi
     ""|Shale.profile|ShaleDarker.profile|ShaleLight.profile)
         kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile ShaleTheme.profile ;;
 esac
-
-# Recolour terminals that are already open: re-apply the profile to their sessions.
-for svc in $(qdbus6 2>/dev/null | grep '^ *org\.kde\.konsole'); do
-    for s in $(qdbus6 "$svc" 2>/dev/null | grep '^/Sessions/'); do
-        [ "$(qdbus6 "$svc" "$s" org.kde.konsole.Session.profile 2>/dev/null)" = "Shale Theme" ] &&
-            qdbus6 "$svc" "$s" org.kde.konsole.Session.setProfile "Shale Theme" >/dev/null 2>&1
-    done
-done
 
 # The login screen can't know whose theme to show, so it follows whoever logged in last.
 [ "$mode" = light ] && wall=images || wall=images_dark
