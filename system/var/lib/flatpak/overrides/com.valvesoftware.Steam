@@ -1,0 +1,4 @@
+[Environment]
+PROTON_USE_NTSYNC=1
+# Bigger audio buffers for games, so sound doesn't crackle while they load.
+PULSE_LATENCY_MSEC=60

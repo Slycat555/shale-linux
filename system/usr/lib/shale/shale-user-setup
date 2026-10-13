@@ -36,6 +36,9 @@ while read -r out; do
         echo "$out" >> "$seen"
 done
 
+# Always the performance power profile: Shale prefers speed and low latency over saving power.
+powerprofilesctl set performance 2>/dev/null
+
 # Keep Flathub's app catalogue current for Bazaar (in the background; needs internet).
 (flatpak update --system -y --noninteractive --appstream flathub >/dev/null 2>&1 &)
 

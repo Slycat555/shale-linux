@@ -1,0 +1,3 @@
+# Shale: start the latency-focused scx_lavd sched_ext scheduler, in gaming mode, at boot.
+default_sched = "scx_lavd"
+default_mode = "Gaming"

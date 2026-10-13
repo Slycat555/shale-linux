@@ -59,6 +59,8 @@ pipewire-pulse
 pipewire-jack
 wireplumber
 rtkit
+scx-scheds
+scx-tools
 
 # ---- KDE Plasma live desktop ----
 plasma-desktop

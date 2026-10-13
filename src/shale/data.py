@@ -15,6 +15,12 @@ FLATPAKS = [
 # Kernel options for a quiet, logo-free boot straight into the desktop.
 QUIET_CMDLINE = ("quiet splash loglevel=3 rd.udev.log_level=3 systemd.show_status=auto "
                  "vt.global_cursor_default=0")
+# Lowest latency over power saving: full kernel preemption, CPUs never idle (idle=poll
+# keeps every core busy-waiting: more heat and power use), and no power saving for PCIe
+# links, USB devices (audio adapters), NVMe drives or the onboard sound chip.
+PERFORMANCE_CMDLINE = ("preempt=full idle=poll pcie_aspm=off usbcore.autosuspend=-1 "
+                       "nvme_core.default_ps_max_latency_us=0 snd_hda_intel.power_save=0 "
+                       "snd_hda_intel.power_save_controller=N")
 
 BASE_PACKAGES = [
     "base", "linux", "linux-firmware", "sof-firmware",
@@ -29,6 +35,8 @@ BASE_PACKAGES = [
     "pipewire", "pipewire-alsa", "pipewire-pulse", "pipewire-jack", "wireplumber",
     # Real-time priority for the audio thread, so busy games don't make sound stutter
     "rtkit",
+    # sched_ext CPU schedulers and the service that starts one at boot (scx_lavd)
+    "scx-scheds", "scx-tools",
     # Bluetooth & printing
     "bluez", "bluez-utils", "cups",
     # Flatpak
@@ -75,7 +83,7 @@ SERVICES = [
     "NetworkManager.service", "sddm.service", "bluetooth.service",
     "cups.socket", "fstrim.timer", "paccache.timer",
     "systemd-timesyncd.service", "power-profiles-daemon.service",
-    "shale-firstboot.service", "cronie.service",
+    "shale-firstboot.service", "cronie.service", "scx_loader.service",
 ]
 
 # (label, locale)
