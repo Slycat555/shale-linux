@@ -27,6 +27,8 @@ BASE_PACKAGES = [
     "python", "pyside6", "qt6-svg",
     # Audio
     "pipewire", "pipewire-alsa", "pipewire-pulse", "pipewire-jack", "wireplumber",
+    # Real-time priority for the audio thread, so busy games don't make sound stutter
+    "rtkit",
     # Bluetooth & printing
     "bluez", "bluez-utils", "cups",
     # Flatpak
