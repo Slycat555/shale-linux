@@ -29,7 +29,7 @@ BACKEND = "/usr/lib/shale/shale-install-backend"
 MIN_DISK_BYTES = 30 * 1000 ** 3
 
 SLIDES = [
-    ("io.github.kolunmi.Bazaar", "system-software-install", "Bazaar app store",
+    ("shale-software", "system-software-install", "Software Manager",
      "Find and install thousands of free apps with one click: games, music, "
      "photo editors, chat apps and more."),
     ("libreoffice-startcenter", "x-office-document", "LibreOffice",
@@ -47,7 +47,7 @@ SLIDES = [
     ("preferences-system-bluetooth", "bluetooth", "Bluetooth built in",
      "Connect headphones, mice, keyboards and game controllers from the panel."),
     ("applications-games", "input-gaming", "Ready for games",
-     "AMD graphics work out of the box. Get Steam from Bazaar and start playing."),
+     "AMD graphics work out of the box. Get Steam from the Software Manager and start playing."),
 ]
 
 # Default keyboard for each language (index into data.KEYBOARDS by label).
@@ -692,7 +692,7 @@ class ReadyPage(Page):
         for key in ("amd", "nvidia", "intel", "generic"):
             self.gpu.addItem(data.GPU_LABELS[key], key)
         self.gpu.setCurrentIndex(self.gpu.findData(detect_gpu()))
-        self.box.addWidget(label("You'll get KDE Plasma with Bazaar, LibreOffice, VLC, "
+        self.box.addWidget(label("You'll get KDE Plasma with the Software Manager, LibreOffice, VLC, "
                                  "Gwenview and Chromium, all ready to use.", "muted"))
         self.box.addStretch()
 

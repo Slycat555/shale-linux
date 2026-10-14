@@ -9,11 +9,11 @@ Boot the USB stick, click through a short installer and you get a complete deskt
 | | |
 |---|---|
 | **Desktop** | KDE Plasma 6 (Wayland) with the Shale Dark theme (#1e1e1e), or Shale Darker (#141414) and Shale Light under System Settings → Global Theme, and Shale wallpaper on the desktop, lock screen and login screen |
-| **Panel** | Solid (non-floating) bottom panel with Bazaar, Chromium, Files, Calculator and LibreOffice pinned |
+| **Panel** | Solid (non-floating) bottom panel with the Software Manager, Chromium, Files, Calculator and LibreOffice pinned |
 | **Graphics** | AMD by default (Mesa + RADV Vulkan, 32-bit libraries for games). Intel and NVIDIA are detected and offered automatically. |
 | **Audio** | PipeWire (with PulseAudio, ALSA and JACK compatibility) |
 | **Bluetooth** | Enabled and switched on automatically |
-| **Apps** | Flatpak + Flathub out of the box, plus **[Bazaar](https://github.com/kolunmi/bazaar)** (app store), **LibreOffice**, **VLC**, **Gwenview**, **Chromium** and **[LocalSend](https://localsend.org)** |
+| **Apps** | Flatpak + Flathub out of the box, plus the **Software Manager** ([our fork of Linux Mint's](https://github.com/slycat555/shale-software)), an app store for Flathub apps and Arch packages, **LibreOffice**, **VLC**, **Gwenview**, **Chromium** and **[LocalSend](https://localsend.org)** |
 | **Snapshots** | **Shale Snapshots** ([our Timeshift fork](https://github.com/slycat555/shale-snapshots)): daily and boot snapshots of the system, plus one before every update, so you can roll back |
 | **Updates** | **Software Update** updates the system and all apps with one click and a progress bar. Admin users don't need a password. |
 | **Boot** | Silent: no boot menu, no scrolling text, no Arch logo. Just the computer maker's logo and a spinner. |
@@ -30,7 +30,7 @@ Under the hood it's plain Arch Linux, using the official Arch repositories. The 
 
 > ⚠ The installer uses the **whole disk** you choose and erases everything on it.
 
-Bazaar and LocalSend are copied from the USB stick. Everything else is downloaded fresh while installing, so an internet connection is required.
+LocalSend is copied from the USB stick. Everything else is downloaded fresh while installing, so an internet connection is required.
 
 ## How it's put together
 
