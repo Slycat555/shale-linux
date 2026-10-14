@@ -30,7 +30,6 @@ file_permissions=(
   ["/usr/lib/shale/shale-login-wallpaper"]="0:0:755"
   ["/usr/lib/shale/shale-match-theme"]="0:0:755"
   ["/usr/lib/shale/shale-theme-watcher"]="0:0:755"
-  ["/usr/lib/shale/shale-game-audio-boost"]="0:0:755"
   ["/usr/bin/timeshift"]="0:0:755"
   ["/usr/bin/timeshift-gtk"]="0:0:755"
   ["/usr/bin/timeshift-launcher"]="0:0:755"

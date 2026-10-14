@@ -1,9 +1,0 @@
-[Unit]
-Description=Real-time priority for game audio under Wine/Proton (like Windows' Pro Audio)
-
-[Service]
-ExecStart=/usr/lib/shale/shale-game-audio-boost
-Nice=10
-
-[Install]
-WantedBy=multi-user.target
