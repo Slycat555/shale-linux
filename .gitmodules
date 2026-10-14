@@ -2,3 +2,7 @@
 	path = snapshots
 	url = ../shale-snapshots
 	branch = shale
+[submodule "software"]
+	path = software
+	url = ../shale-software
+	branch = shale

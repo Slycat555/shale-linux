@@ -33,4 +33,10 @@ file_permissions=(
   ["/usr/bin/timeshift"]="0:0:755"
   ["/usr/bin/timeshift-gtk"]="0:0:755"
   ["/usr/bin/timeshift-launcher"]="0:0:755"
+  ["/usr/bin/shale-software"]="0:0:755"
+  ["/usr/bin/shale-software-fp-handler"]="0:0:755"
+  ["/usr/bin/shale-software-update-pkgcache"]="0:0:755"
+  ["/usr/lib/shale-software/shale-software.py"]="0:0:755"
+  ["/usr/lib/shale-software/update-pkgcache.py"]="0:0:755"
+  ["/usr/lib/shale-software/pacman-helper"]="0:0:755"
 )

@@ -1,4 +1,4 @@
-/* Shale: make libadwaita (GTK 4) apps such as Bazaar follow the KDE colour scheme.
+/* Shale: make libadwaita (GTK 4) apps follow the KDE colour scheme.
  * The *_breeze colours are written to colors.css by kde-gtk-config whenever the
  * colour scheme changes; this file maps them onto libadwaita's named colours.
  * Installed into ~/.config/gtk-4.0 at login by shale-user-setup. */
