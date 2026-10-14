@@ -1,24 +1,38 @@
-#!/bin/sh
-# "Pro Audio" priority for games under Wine/Proton. On Windows, games ask the MMCSS service
-# to run their audio threads ahead of everything else; Wine doesn't implement it, so their
-# sound can crackle whenever loading keeps the game busy. Every few seconds, give the audio
-# threads of running Wine programs real-time priority: SCHED_RR 10, below PipeWire's own 20.
-# Runs as root (shale-game-audio-boost.service); only touches Wine processes.
-while :; do
-    for p in /proc/[0-9]*; do
-        case "$(readlink "$p/exe" 2>/dev/null)" in
-            */wine-preloader|*/wine64-preloader|*/wine|*/wine64) ;;
-            *) continue ;;
-        esac
-        for t in "$p"/task/*; do
-            name=$(tr '[:upper:]' '[:lower:]' < "$t/comm" 2>/dev/null) || continue
-            case "$name" in
-                *audio*|*sound*|*wasapi*|*mmdevapi*|*xaudio*|*faudio*|*fmod*|*wwise*|*openal*|*mixer*) ;;
-                *) continue ;;
-            esac
-            tid=${t##*/}
-            chrt -p "$tid" 2>/dev/null | grep -q SCHED_OTHER && chrt -r -p 10 "$tid" 2>/dev/null
-        done
-    done
-    sleep 3
-done
+#!/usr/bin/python3
+"""'Pro Audio' priority for games under Wine/Proton.
+
+On Windows, games ask the MMCSS service to run their audio threads ahead of everything
+else; Wine doesn't implement it, so their sound can crackle whenever loading keeps the game
+busy. Every few seconds, give the audio threads of running Wine programs real-time priority:
+SCHED_RR 10, below PipeWire's own 20. Runs as root (shale-game-audio-boost.service) and only
+touches Wine processes. Reads /proc directly, without starting other programs, so it stays
+light enough not to disturb the games it helps.
+"""
+import os
+import time
+
+WINE = ("wine-preloader", "wine64-preloader", "wine", "wine64")
+AUDIO = ("audio", "sound", "wasapi", "mmdevapi", "xaudio", "faudio", "fmod", "wwise",
+         "openal", "mixer")
+PRIORITY = os.sched_param(10)
+
+while True:
+    for pid in os.listdir("/proc"):
+        if not pid.isdigit():
+            continue
+        try:
+            if os.path.basename(os.readlink(f"/proc/{pid}/exe")) not in WINE:
+                continue
+            tids = os.listdir(f"/proc/{pid}/task")
+        except OSError:
+            continue
+        for tid in tids:
+            try:
+                with open(f"/proc/{pid}/task/{tid}/comm") as f:
+                    name = f.read().strip().lower()
+                if any(word in name for word in AUDIO) and \
+                        os.sched_getscheduler(int(tid)) == os.SCHED_OTHER:
+                    os.sched_setscheduler(int(tid), os.SCHED_RR, PRIORITY)
+            except OSError:
+                continue
+    time.sleep(3)
