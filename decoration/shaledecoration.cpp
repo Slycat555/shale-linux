@@ -10,7 +10,8 @@
 #include <algorithm>
 #include <cmath>
 
-K_PLUGIN_FACTORY_WITH_JSON(ShaleDecorationFactory, "shaledecoration.json", registerPlugin<Shale::Decoration>();)
+K_PLUGIN_FACTORY_WITH_JSON(ShaleDecorationFactory, "shaledecoration.json",
+                           registerPlugin<Shale::Decoration>(); registerPlugin<Shale::Button>();)
 
 namespace Shale
 {
@@ -227,6 +228,13 @@ Button::Button(DecorationButtonType type, Decoration *decoration, QObject *paren
     connect(this, &DecorationButton::checkedChanged, this, [this] { update(); });
 }
 
+Button::Button(QObject *parent, const QVariantList &args)
+    : Button(args.at(0).value<DecorationButtonType>(),
+             qobject_cast<Decoration *>(args.at(1).value<KDecoration3::Decoration *>()), parent)
+{
+    m_standalone = true;
+}
+
 KDecoration3::DecorationButton *Button::create(DecorationButtonType type, KDecoration3::Decoration *decoration, QObject *parent)
 {
     auto *deco = qobject_cast<Decoration *>(decoration);
@@ -286,14 +294,17 @@ void Button::paint(QPainter *painter, const QRectF &repaintArea)
     if (!isEnabled()) {
         glyph.setAlphaF(0.3);
     }
-    QPen pen(glyph, 1.0);
+    // Standalone buttons are drawn large and scaled down by GTK, so the glyph and its
+    // line grow with the button instead of keeping the title bar's pixel sizes.
+    const qreal glyphSize = m_standalone ? std::round(rect.height() * 0.4) : GlyphSize;
+    QPen pen(glyph, m_standalone ? std::max<qreal>(1.0, rect.height() / 20) : 1.0);
     pen.setCapStyle(Qt::FlatCap);
     pen.setJoinStyle(Qt::MiterJoin);
     painter->setPen(pen);
     painter->setBrush(Qt::NoBrush);
 
-    const QRectF box(std::round(rect.center().x() - GlyphSize / 2) + 0.5,
-                     std::round(rect.center().y() - GlyphSize / 2) + 0.5, GlyphSize, GlyphSize);
+    const QRectF box(std::round(rect.center().x() - glyphSize / 2) + 0.5,
+                     std::round(rect.center().y() - glyphSize / 2) + 0.5, glyphSize, glyphSize);
     paintGlyph(painter, box);
     painter->restore();
 }
