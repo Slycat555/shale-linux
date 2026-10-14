@@ -3,6 +3,7 @@
 
 Usage: make-app-icons.py LOGO.svg OUTDIR
   shale-update.svg     Software Update: a solid upward arrow over faint strata
+  shale-game-panel.svg Game Panel: a solid game controller over faint strata
   shale-snapshots.svg  Shale Snapshots: the logo with earlier copies fading behind it
   shale-status-*.svg   Shale Snapshots' status badges (ok, warn, error): the snapshots
                        icon with a coloured badge, used in the app's schedule page
@@ -13,7 +14,7 @@ import os
 import re
 import sys
 
-from PySide6.QtCore import QPointF
+from PySide6.QtCore import QPointF, QRectF
 from PySide6.QtGui import QPainterPath, QPolygonF, QTransform
 
 BG = "#2b3440"
@@ -74,6 +75,41 @@ def update_icon(stripes):
     return out
 
 
+def controller():
+    """An Xbox-style controller: a rounded body flowing into angled grips, with the
+    offset layout cut out (left stick high, D-pad low, buttons high, right stick low)
+    and the round guide button at the top."""
+    body = QPainterPath(QPointF(64, 38))
+    for c1, c2, end in [((78, 36), (90, 34), (100, 38)),     # top edge to the right shoulder
+                        ((114, 44), (120, 66), (122, 86)),   # down the right side
+                        ((124, 102), (110, 108), (102, 98)), # round the right grip
+                        ((96, 90), (88, 84), (76, 84)),      # up the inside of the grip
+                        ((70, 84), (58, 84), (52, 84)),      # along the bottom
+                        ((40, 84), (32, 90), (26, 98)),      # down the inside of the left grip
+                        ((18, 108), (4, 102), (6, 86)),      # round the left grip
+                        ((8, 66), (14, 44), (28, 38)),       # up the left side
+                        ((38, 34), (50, 36), (64, 38))]:     # back to the top
+        body.cubicTo(QPointF(*c1), QPointF(*c2), QPointF(*end))
+    holes = QPainterPath()
+    holes.addEllipse(QPointF(38, 56), 8, 8)           # left stick
+    holes.addEllipse(QPointF(78, 70), 8, 8)           # right stick
+    holes.addRect(QRectF(45, 67, 16, 5))              # D-pad
+    holes.addRect(QRectF(50.5, 61.5, 5, 16))
+    for x, y in ((92, 49), (92, 63), (85, 56), (99, 56)):  # A, B, X, Y
+        holes.addEllipse(QPointF(x, y), 3.3, 3.3)
+    holes.addEllipse(QPointF(64, 49), 4.5, 4.5)       # guide button
+    # Centred in the disc (the shape spans y 34-108).
+    return QTransform.fromTranslate(0, -7).map(body.subtracted(holes))
+
+
+def game_panel_icon(stripes):
+    pad = shrink(controller(), 0.74)  # wide and flat, so a bit larger to match the others
+    out = [f'<circle cx="{CX}" cy="{CY}" r="{R}" fill="{BG}"/>']
+    out += [svg_path(p, fill, ' fill-opacity="0.22"') for fill, p in stripes]
+    out.append(svg_path(pad.intersected(circle(CX, CY, R)), SYMBOL, ' fill-rule="evenodd"'))
+    return out
+
+
 def snapshots_icon(stripes):
     # Three copies of the logo stepping back diagonally: the front one is now, the
     # fainter ones behind it are earlier snapshots.
@@ -108,6 +144,7 @@ STATUS = {
 
 stripes = read_logo(sys.argv[1])
 icons = [("shale-update.svg", update_icon(stripes)),
+         ("shale-game-panel.svg", game_panel_icon(stripes)),
          ("shale-snapshots.svg", snapshots_icon(stripes))]
 icons += [(name, status_icon(stripes, colour, glyph)) for name, (colour, glyph) in STATUS.items()]
 for name, parts in icons:
