@@ -1,2 +1,0 @@
-# Keep AMD graphics cards at full clocks instead of power-saving levels.
-ACTION=="add|change", SUBSYSTEM=="drm", KERNEL=="card[0-9]*", DRIVERS=="amdgpu", ATTR{device/power_dpm_force_performance_level}="high"
