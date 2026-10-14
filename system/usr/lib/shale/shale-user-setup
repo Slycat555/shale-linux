@@ -39,10 +39,7 @@ done
 # Always the performance power profile: Shale prefers speed and low latency over saving power.
 powerprofilesctl set performance 2>/dev/null
 
-# Keep Flathub's app catalogue current for Bazaar (in the background; needs internet).
+# Keep Flathub's app catalogue current for the Software Manager (in the background; needs internet).
 (flatpak update --system -y --noninteractive --appstream flathub >/dev/null 2>&1 &)
 
-# Bazaar must not linger in the background (and so in the system tray) after its
-# window is closed; Shale Update handles updates instead.
-flatpak permission-set background background io.github.kolunmi.Bazaar no 2>/dev/null
 exit 0

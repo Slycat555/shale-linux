@@ -1,5 +1,5 @@
 // Shale Linux default desktop: Shale wallpaper and a solid (non-floating) bottom
-// panel with Bazaar, Chromium, Files, Calculator and LibreOffice Writer pinned.
+// panel with the Software Manager, Chromium, Files, Calculator and LibreOffice Writer pinned.
 
 var desktopsArray = desktopsForActivity(currentActivity());
 for (var j = 0; j < desktopsArray.length; j++) {
@@ -23,7 +23,7 @@ kickoff.writeConfig("favorites", [
     "org.kde.dolphin.desktop",
     "org.kde.konsole.desktop",
     "org.kde.kalk.desktop",
-    "io.github.kolunmi.Bazaar.desktop",
+    "org.shale.software.desktop",
     "org.localsend.localsend_app.desktop",
     "libreoffice-writer.desktop",
     "systemsettings.desktop",
@@ -35,7 +35,7 @@ panel.addWidget("org.kde.plasma.pager");
 var tasks = panel.addWidget("org.kde.plasma.icontasks");
 tasks.currentConfigGroup = ["General"];
 tasks.writeConfig("launchers", [
-    "applications:io.github.kolunmi.Bazaar.desktop",
+    "applications:org.shale.software.desktop",
     "applications:chromium.desktop",
     "applications:org.kde.dolphin.desktop",
     "applications:org.kde.kalk.desktop",

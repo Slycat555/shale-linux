@@ -374,6 +374,10 @@ class Installer:
                 dest = TARGET + path
                 os.makedirs(os.path.dirname(dest), exist_ok=True)
                 shutil.copy2(path, dest, follow_symlinks=False)
+        # Copied files don't trigger pacman's hooks: compile the Software Manager's settings
+        # schema and pick up the new icons.
+        self.chroot(["glib-compile-schemas", "/usr/share/glib-2.0/schemas"], check=False)
+        self.chroot(["gtk-update-icon-cache", "-q", "-t", "-f", "/usr/share/icons/hicolor"], check=False)
         # From now on the shale-os-release pacman hook keeps this in place.
         shutil.copy2("/usr/share/shale/os-release", TARGET + "/usr/lib/os-release")
         self.configure_snapshots()

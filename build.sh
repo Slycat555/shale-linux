@@ -15,7 +15,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-rm -rf "$PROFILE" "$WORK" build/snapshots build/snapshots-root
+rm -rf "$PROFILE" "$WORK" build/snapshots build/snapshots-root build/software-root
 mkdir -p build
 cp -a iso "$PROFILE"
 
@@ -37,6 +37,11 @@ meson compile -C build/snapshots
 DESTDIR="$PWD/build/snapshots-root" meson install -C build/snapshots --no-rebuild
 cp -a build/snapshots-root/. "$A/"
 
+# The Software Manager, our fork of Linux Mint's (the software/ submodule).
+make -C software
+make -C software DESTDIR="$PWD/build/software-root" install
+cp -a build/software-root/. "$A/"
+
 # The installer copies everything in this manifest to the new system.
 # (The installer itself is left out; it is only needed on the USB stick.)
 install -d "$A/usr/share/shale"
@@ -49,6 +54,7 @@ install -d "$A/usr/share/shale"
     echo /usr/share/pixmaps/shale-logo.svg
     echo "$DECO_SO"
     (cd build/snapshots-root && find . \( -type f -o -type l \) | sed 's|^\.||')
+    (cd build/software-root && find . \( -type f -o -type l \) | sed 's|^\.||')
 } | sort > "$A/usr/share/shale/overlay-files"
 
 # 2. Live-only: start the installer when the live desktop appears.
@@ -67,7 +73,7 @@ rm -rf "$FLATPAK_STAGE"
 export FLATPAK_SYSTEM_DIR="$PWD/$FLATPAK_STAGE"
 flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install --system -y --noninteractive flathub "${FLATPAKS[@]}"
-# Flathub's app catalogue (appstream), so Bazaar can list apps straight away, even offline.
+# Flathub's app catalogue (appstream), so the Software Manager can list apps straight away, even offline.
 flatpak update --system -y --noninteractive --appstream flathub
 unset FLATPAK_SYSTEM_DIR
 install -d "$A/var/lib/shale"
