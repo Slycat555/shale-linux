@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QApplication, QStyleFactory
 
 
 def _kde_colors():
-    """The user's KDE colour scheme (Shale Dark, Shale Darker, light or custom) from kdeglobals."""
+    """The user's KDE colour scheme (Shale, Shale Light or custom) from kdeglobals."""
     cfg = configparser.ConfigParser(strict=False, interpolation=None)
     cfg.optionxform = str
     home = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
@@ -28,7 +28,7 @@ def _kde_colors():
             return QColor(default)
 
     return {
-        "bg": get("Colors:Window", "BackgroundNormal", "#1e1e1e"),
+        "bg": get("Colors:Window", "BackgroundNormal", "#141414"),
         "text": get("Colors:Window", "ForegroundNormal", "#ececec"),
         "muted": get("Colors:Window", "ForegroundInactive", "#9a9a9a"),
         "accent": get("Colors:Selection", "BackgroundNormal", "#3584e4"),
