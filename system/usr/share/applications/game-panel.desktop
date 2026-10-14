@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Game Panel
+GenericName=Smooth gaming settings
+Comment=Run your Steam games in gamescope for smooth, steady frames, one switch for all games or per game
+Exec=game-panel
+Icon=shale-game-panel
+Terminal=false
+Categories=Game;Settings;
+Keywords=gamescope;steam;games;fps;vrr;mangohud;launch options;

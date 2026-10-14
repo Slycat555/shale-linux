@@ -28,6 +28,7 @@ kickoff.writeConfig("favorites", [
     "libreoffice-writer.desktop",
     "systemsettings.desktop",
     "shale-update.desktop",
+    "game-panel.desktop",
     "timeshift-gtk.desktop"
 ].join(","));
 panel.addWidget("org.kde.plasma.pager");
