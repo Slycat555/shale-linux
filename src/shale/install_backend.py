@@ -417,7 +417,7 @@ class Installer:
         if self.luks_uuid:
             root_opt = f"rd.luks.name={self.luks_uuid}=cryptroot root=/dev/mapper/cryptroot"
         extra = " nvidia_drm.modeset=1" if self.cfg["gpu"] == "nvidia" else ""
-        opts = f"{root_opt} rw {data.QUIET_CMDLINE} {data.PERFORMANCE_CMDLINE}{extra}"
+        opts = f"{root_opt} rw {data.QUIET_CMDLINE}{extra}"
 
         if self.uefi:
             cmd = ["bootctl", "install", "--esp-path=/boot"]
@@ -441,7 +441,7 @@ class Installer:
             cmdline = (f"rd.luks.name={self.luks_uuid}=cryptroot" if self.luks_uuid
                        else "") + extra
             settings = {
-                "GRUB_CMDLINE_LINUX_DEFAULT": f'"{data.QUIET_CMDLINE} {data.PERFORMANCE_CMDLINE}"',
+                "GRUB_CMDLINE_LINUX_DEFAULT": f'"{data.QUIET_CMDLINE}"',
                 "GRUB_CMDLINE_LINUX": f'"{cmdline.strip()}"',
                 "GRUB_DISTRIBUTOR": f'"{data.DISTRO_NAME}"',
                 "GRUB_TIMEOUT": "0",
