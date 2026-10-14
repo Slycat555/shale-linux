@@ -14,7 +14,7 @@ import re
 import sys
 
 from PySide6.QtCore import QPointF
-from PySide6.QtGui import QPainterPath, QPolygonF
+from PySide6.QtGui import QPainterPath, QPolygonF, QTransform
 
 BG = "#2b3440"
 SYMBOL = "#c3cfdc"  # the logo's lightest stripe
@@ -51,12 +51,22 @@ def circle(cx, cy, r):
     return path
 
 
+def shrink(path, factor=0.66):
+    """The symbol at a size that leaves room around it, centred in the disc."""
+    t = QTransform()
+    t.translate(CX, CY)
+    t.scale(factor, factor)
+    t.translate(-CX, -CY)
+    return t.map(path)
+
+
 def update_icon(stripes):
     # An upward arrow: head 72 wide, shaft 30 wide.
     arrow = QPainterPath()
     arrow.addPolygon(QPolygonF([QPointF(*p) for p in [
         (64, 14), (101, 54), (79, 54), (79, 112), (49, 112), (49, 54), (27, 54), (64, 14)]]))
     arrow.closeSubpath()
+    arrow = shrink(arrow)
     out = [f'<circle cx="{CX}" cy="{CY}" r="{R}" fill="{BG}"/>']
     # Faint strata behind a solid arrow in the logo's lightest colour.
     out += [svg_path(p, fill, ' fill-opacity="0.22"') for fill, p in stripes]
