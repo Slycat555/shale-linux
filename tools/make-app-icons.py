@@ -2,7 +2,7 @@
 """Writes Shale's app icons, both made from the strata of the Shale logo.
 
 Usage: make-app-icons.py LOGO.svg OUTDIR
-  shale-update.svg     Software Update: an upward arrow cut out of the strata
+  shale-update.svg     Software Update: a solid upward arrow over faint strata
   shale-snapshots.svg  Shale Snapshots: the logo with earlier copies fading behind it
   shale-status-*.svg   Shale Snapshots' status badges (ok, warn, error): the snapshots
                        icon with a coloured badge, used in the app's schedule page
@@ -14,9 +14,10 @@ import re
 import sys
 
 from PySide6.QtCore import QPointF
-from PySide6.QtGui import QPainterPath, QPolygonF
+from PySide6.QtGui import QPainterPath, QPolygonF, QTransform
 
 BG = "#2b3440"
+SYMBOL = "#c3cfdc"  # the logo's lightest stripe
 CX = CY = 64
 R = 58
 
@@ -50,17 +51,26 @@ def circle(cx, cy, r):
     return path
 
 
+def shrink(path, factor=0.66):
+    """The symbol at a size that leaves room around it, centred in the disc."""
+    t = QTransform()
+    t.translate(CX, CY)
+    t.scale(factor, factor)
+    t.translate(-CX, -CY)
+    return t.map(path)
+
+
 def update_icon(stripes):
     # An upward arrow: head 72 wide, shaft 30 wide.
     arrow = QPainterPath()
     arrow.addPolygon(QPolygonF([QPointF(*p) for p in [
         (64, 14), (101, 54), (79, 54), (79, 112), (49, 112), (49, 54), (27, 54), (64, 14)]]))
     arrow.closeSubpath()
+    arrow = shrink(arrow)
     out = [f'<circle cx="{CX}" cy="{CY}" r="{R}" fill="{BG}"/>']
-    # The strata, faint everywhere and full strength inside the arrow.
+    # Faint strata behind a solid arrow in the logo's lightest colour.
     out += [svg_path(p, fill, ' fill-opacity="0.22"') for fill, p in stripes]
-    out.append(svg_path(arrow.intersected(circle(CX, CY, R)), "#1b222b"))
-    out += [svg_path(p.intersected(arrow), fill) for fill, p in stripes]
+    out.append(svg_path(arrow.intersected(circle(CX, CY, R)), SYMBOL))
     return out
 
 

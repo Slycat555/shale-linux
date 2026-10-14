@@ -40,12 +40,16 @@ class Button : public KDecoration3::DecorationButton
     Q_OBJECT
 public:
     Button(KDecoration3::DecorationButtonType type, Decoration *decoration, QObject *parent = nullptr);
+    // Standalone button for the plugin factory: KDE's GTK settings module draws each
+    // button on its own this way to make the window buttons of GTK apps.
+    Button(QObject *parent, const QVariantList &args);
     static KDecoration3::DecorationButton *create(KDecoration3::DecorationButtonType type,
                                                   KDecoration3::Decoration *decoration, QObject *parent);
     void paint(QPainter *painter, const QRectF &repaintArea) override;
 
 private:
     void paintGlyph(QPainter *painter, const QRectF &box) const;
+    bool m_standalone = false;
 };
 
 } // namespace Shale

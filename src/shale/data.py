@@ -8,7 +8,6 @@ FLATHUB_REPO = "https://dl.flathub.org/repo/flathub.flatpakrepo"
 # Flatpaks from Flathub. They are pre-installed on the ISO (see build.sh) and copied
 # to the new system, so they work without an internet connection.
 FLATPAKS = [
-    "io.github.kolunmi.Bazaar",  # app store
     "org.localsend.localsend_app",  # send files to nearby phones and computers
 ]
 
@@ -37,6 +36,9 @@ BASE_PACKAGES = [
     "flatpak",
     # Shale Snapshots (Timeshift fork) and its scheduler
     "cronie", "vte3", "libgee", "json-glib", "psmisc",
+    # Software Manager (Linux Mint's, for pacman): GTK 3 + XApp, and Arch's app catalogue
+    "python-gobject", "python-cairo", "gtk3", "xapp", "python-xapp", "libxmlb",
+    "archlinux-appstream-data", "python-requests", "python-html2text", "python-setproctitle",
     # Fonts
     "noto-fonts", "noto-fonts-emoji", "ttf-ibm-plex", "noto-fonts-cjk", "ttf-liberation",
 ]

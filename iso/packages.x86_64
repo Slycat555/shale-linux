@@ -85,6 +85,16 @@ vte3
 libgee
 json-glib
 psmisc
+python-gobject
+python-cairo
+gtk3
+xapp
+python-xapp
+libxmlb
+archlinux-appstream-data
+python-requests
+python-html2text
+python-setproctitle
 kate
 partitionmanager
 spectacle
