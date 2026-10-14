@@ -14,6 +14,7 @@ Boot the USB stick, click through a short installer and you get a complete deskt
 | **Audio** | PipeWire (with PulseAudio, ALSA and JACK compatibility) |
 | **Bluetooth** | Enabled and switched on automatically |
 | **Apps** | Flatpak + Flathub out of the box, plus the **Software Manager** ([our fork of Linux Mint's](https://github.com/slycat555/shale-software)), an app store for Flathub apps and Arch packages, **LibreOffice**, **VLC**, **Gwenview**, **Chromium** and **[LocalSend](https://localsend.org)** |
+| **Gaming** | **Game Panel** runs Steam games inside gamescope (the Steam Deck's compositor) for smooth, evenly paced frames: one switch for every game, or per-game resolution, FPS cap, FSR, VRR and HDR |
 | **Snapshots** | **Shale Snapshots** ([our Timeshift fork](https://github.com/slycat555/shale-snapshots)): daily and boot snapshots of the system, plus one before every update, so you can roll back |
 | **Updates** | **Software Update** updates the system and all apps with one click and a progress bar. Admin users don't need a password. |
 | **Boot** | Silent: no boot menu, no scrolling text, no Arch logo. Just the computer maker's logo and a spinner. |

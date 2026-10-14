@@ -34,6 +34,9 @@ BASE_PACKAGES = [
     "bluez", "bluez-utils", "cups",
     # Flatpak
     "flatpak",
+    # Game Panel: runs Steam games inside gamescope (native Steam uses this package;
+    # Flatpak Steam uses Flathub's gamescope extension)
+    "gamescope",
     # Shale Snapshots (Timeshift fork) and its scheduler
     "cronie", "vte3", "libgee", "json-glib", "psmisc",
     # Software Manager (Linux Mint's, for pacman): GTK 3 + XApp, and Arch's app catalogue

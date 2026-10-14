@@ -23,6 +23,7 @@ file_permissions=(
   ["/usr/local/bin/shale-live-setup"]="0:0:755"
   ["/usr/bin/shale-installer"]="0:0:755"
   ["/usr/bin/shale-update"]="0:0:755"
+  ["/usr/bin/game-panel"]="0:0:755"
   ["/usr/lib/shale/shale-install-backend"]="0:0:755"
   ["/usr/lib/shale/shale-update-helper"]="0:0:755"
   ["/usr/lib/shale/shale-firstboot"]="0:0:755"
