@@ -1,0 +1,24 @@
+#!/bin/sh
+# "Pro Audio" priority for games under Wine/Proton. On Windows, games ask the MMCSS service
+# to run their audio threads ahead of everything else; Wine doesn't implement it, so their
+# sound can crackle whenever loading keeps the game busy. Every few seconds, give the audio
+# threads of running Wine programs real-time priority: SCHED_RR 10, below PipeWire's own 20.
+# Runs as root (shale-game-audio-boost.service); only touches Wine processes.
+while :; do
+    for p in /proc/[0-9]*; do
+        case "$(readlink "$p/exe" 2>/dev/null)" in
+            */wine-preloader|*/wine64-preloader|*/wine|*/wine64) ;;
+            *) continue ;;
+        esac
+        for t in "$p"/task/*; do
+            name=$(tr '[:upper:]' '[:lower:]' < "$t/comm" 2>/dev/null) || continue
+            case "$name" in
+                *audio*|*sound*|*wasapi*|*mmdevapi*|*xaudio*|*faudio*|*fmod*|*wwise*|*openal*|*mixer*) ;;
+                *) continue ;;
+            esac
+            tid=${t##*/}
+            chrt -p "$tid" 2>/dev/null | grep -q SCHED_OTHER && chrt -r -p 10 "$tid" 2>/dev/null
+        done
+    done
+    sleep 3
+done

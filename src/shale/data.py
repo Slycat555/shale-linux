@@ -84,6 +84,7 @@ SERVICES = [
     "cups.socket", "fstrim.timer", "paccache.timer",
     "systemd-timesyncd.service", "power-profiles-daemon.service",
     "shale-firstboot.service", "cronie.service", "scx_loader.service",
+    "shale-game-audio-boost.service",
 ]
 
 # (label, locale)
