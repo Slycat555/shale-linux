@@ -8,7 +8,7 @@ Boot the USB stick, click through a short installer and you get a complete deskt
 
 | | |
 |---|---|
-| **Desktop** | KDE Plasma 6 (Wayland) with the Shale Dark theme (#1e1e1e), or Shale Darker (#141414) and Shale Light under System Settings → Global Theme, and Shale wallpaper on the desktop, lock screen and login screen |
+| **Desktop** | KDE Plasma 6 (Wayland) with the Shale theme (a near-black #141414), or Shale Light under System Settings → Global Theme, and Shale wallpaper on the desktop, lock screen and login screen |
 | **Panel** | Solid (non-floating) bottom panel with the Software Manager, Chromium, Files, Calculator and LibreOffice pinned |
 | **Graphics** | AMD by default (Mesa + RADV Vulkan, 32-bit libraries for games). Intel and NVIDIA are detected and offered automatically. |
 | **Audio** | PipeWire (with PulseAudio, ALSA and JACK compatibility) |

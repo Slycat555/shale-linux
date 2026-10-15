@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Generates the Shale Dark and Shale Darker KDE color schemes from Breeze Dark, and
-Shale Light from Breeze Light (found next to it).
+"""Generates the Shale KDE color scheme (the default, a near-black #141414) from
+Breeze Dark, and Shale Light from Breeze Light (found next to it).
 
 Usage: make-theme.py /usr/share/color-schemes/BreezeDark.colors <repo>/system
-Writes usr/share/color-schemes/ShaleDark.colors, ShaleDarker.colors,
-ShaleLight.colors and etc/xdg/kdeglobals.
+Writes usr/share/color-schemes/ShaleDark.colors, ShaleLight.colors and
+etc/xdg/kdeglobals. (The default scheme keeps the ShaleDark id the system defaults
+point at; it used to be #1e1e1e, with a separate Shale Darker at #141414.)
 """
 import os
 import re
@@ -14,8 +15,7 @@ ACCENT = "53,132,228"         # #3584e4
 ACCENT_DARK = "26,66,114"
 # Greys for each variant: (base, window alt, view alt, button, tooltip).
 VARIANTS = {
-    "ShaleDark": ("Shale Dark", "30,30,30", "38,38,38", "36,36,36", "45,45,45", "40,40,40"),    # #1e1e1e
-    "ShaleDarker": ("Shale Darker", "20,20,20", "28,28,28", "26,26,26", "35,35,35", "30,30,30"),  # #141414
+    "ShaleDark": ("Shale", "20,20,20", "28,28,28", "26,26,26", "35,35,35", "30,30,30"),  # #141414
 }
 
 src, out = sys.argv[1], sys.argv[2]
