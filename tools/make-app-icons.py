@@ -103,7 +103,7 @@ def controller():
 
 
 def game_panel_icon(stripes):
-    pad = shrink(controller(), 0.74)  # wide and flat, so a bit larger to match the others
+    pad = shrink(controller(), 0.6)
     out = [f'<circle cx="{CX}" cy="{CY}" r="{R}" fill="{BG}"/>']
     out += [svg_path(p, fill, ' fill-opacity="0.22"') for fill, p in stripes]
     out.append(svg_path(pad.intersected(circle(CX, CY, R)), SYMBOL, ' fill-rule="evenodd"'))

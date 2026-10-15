@@ -240,7 +240,7 @@ footer .brand { color: var(--ink); }
         <button role="tab" aria-selected="true" data-shot="dark" data-alt="The Files app and Software Update on the Shale desktop in the Shale theme, a near-black grey"><i style="background:#141414"></i>Shale</button>
         <button role="tab" aria-selected="false" data-shot="light" data-alt="The Files app and Software Update on the Shale desktop in the Shale Light theme, with a light wallpaper and light windows"><i style="background:#eff0f1"></i>Shale Light</button>
       </div>
-      <img class="screen" id="theme-shot" src="shots/dark.webp?v=2026-10-15" width="1920" height="1080" alt="The Files app and Software Update on the Shale desktop in the Shale theme, a near-black grey" role="tabpanel">
+      <img class="screen" id="theme-shot" src="shots/dark.webp?v=2026-10-15b" width="1920" height="1080" alt="The Files app and Software Update on the Shale desktop in the Shale theme, a near-black grey" role="tabpanel">
     </div>
   </section>
 
@@ -280,7 +280,7 @@ footer .brand { color: var(--ink); }
         <p class="lede">Games too: get Steam from the Software Manager and play your library.</p>
       </div>
       <div>
-        <img class="shot" src="software-manager.png?v=2026-10-15" width="1716" height="1548" alt="The Software Manager in Shale, with qBittorrent featured, apps like Whatsie, Audacity, calibre, Telegram, Blender and Discord, and categories below">
+        <img class="shot" src="software-manager.png?v=2026-10-15b" width="1716" height="1548" alt="The Software Manager in Shale, with qBittorrent featured, apps like Whatsie, Audacity, calibre, Telegram, Blender and Discord, and categories below">
         <p class="caption">The Software Manager, the app store that comes with Shale.</p>
       </div>
     </div>
@@ -299,7 +299,7 @@ footer .brand { color: var(--ink); }
           <p class="lede">Switch it on for every game at once, or tune one game: resolution, refresh rate, an FPS cap, FSR upscaling, variable refresh rate and HDR. Changes apply the next time you play, with no Steam restart.</p>
         </div>
       </div>
-      <figure class="solo"><img class="shot" src="game-panel.png?v=2026-10-15" width="2992" height="1912" alt="Game Panel with Arma Reforger set to always run in gamescope, with its own resolution, a 120 fps cap, variable refresh rate and the MangoHud overlay"><figcaption class="caption">Game Panel comes with Shale: one switch for smooth games.</figcaption></figure>
+      <figure class="solo"><img class="shot" src="game-panel.png?v=2026-10-15b" width="2992" height="1912" alt="Game Panel with gamescope switched on for every game, showing ACE COMBAT 7, Arma Reforger and Berry Bury Berry, and the settings for one game"><figcaption class="caption">Game Panel comes with Shale: one switch for smooth games.</figcaption></figure>
     </div>
   </section>
 
@@ -349,7 +349,7 @@ footer .brand { color: var(--ink); }
           <p class="lede">A restore point is saved first, and you restart whenever it suits you.</p>
         </div>
       </div>
-      <figure class="solo"><img class="shot" src="update.png?v=2026-10-15" width="1152" height="672" alt="Software Update saying Keep your computer safe and up to date, with an Update now button"><figcaption class="caption">One click, and you're up to date.</figcaption></figure>
+      <figure class="solo"><img class="shot" src="update.png?v=2026-10-15b" width="1152" height="672" alt="Software Update saying Keep your computer safe and up to date, with an Update now button"><figcaption class="caption">One click, and you're up to date.</figcaption></figure>
     </div>
   </section>
 
@@ -417,7 +417,7 @@ footer .brand { color: var(--ink); }
 (() => {
   // Theme switcher: swap the screenshot when a tab is picked.
   const shot = document.getElementById("theme-shot");
-  const version = "2026-10-15";  // bump when the screenshots change, so browsers fetch the new ones
+  const version = "2026-10-15b";  // bump when the screenshots change, so browsers fetch the new ones
   const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
   tabs.forEach(tab => tab.addEventListener("click", () => {
     tabs.forEach(t => t.setAttribute("aria-selected", String(t === tab)));
