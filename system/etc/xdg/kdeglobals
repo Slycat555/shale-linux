@@ -22,7 +22,7 @@ IntensityEffect=0
 
 [Colors:Button]
 BackgroundAlternate=26,66,114
-BackgroundNormal=45,45,45
+BackgroundNormal=35,35,35
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -36,7 +36,7 @@ ForegroundVisited=155,89,182
 
 [Colors:Complementary]
 BackgroundAlternate=26,66,114
-BackgroundNormal=30,30,30
+BackgroundNormal=20,20,20
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -49,8 +49,8 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Header]
-BackgroundAlternate=30,30,30
-BackgroundNormal=30,30,30
+BackgroundAlternate=20,20,20
+BackgroundNormal=20,20,20
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -63,8 +63,8 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Header][Inactive]
-BackgroundAlternate=30,30,30
-BackgroundNormal=30,30,30
+BackgroundAlternate=20,20,20
+BackgroundNormal=20,20,20
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -91,8 +91,8 @@ ForegroundPositive=23,104,57
 ForegroundVisited=155,89,182
 
 [Colors:Tooltip]
-BackgroundAlternate=30,30,30
-BackgroundNormal=40,40,40
+BackgroundAlternate=20,20,20
+BackgroundNormal=30,30,30
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -105,8 +105,8 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:View]
-BackgroundAlternate=36,36,36
-BackgroundNormal=30,30,30
+BackgroundAlternate=26,26,26
+BackgroundNormal=20,20,20
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -119,8 +119,8 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Window]
-BackgroundAlternate=38,38,38
-BackgroundNormal=30,30,30
+BackgroundAlternate=28,28,28
+BackgroundNormal=20,20,20
 DecorationFocus=53,132,228
 DecorationHover=53,132,228
 ForegroundActive=53,132,228
@@ -134,21 +134,19 @@ ForegroundVisited=155,89,182
 
 [General]
 ColorScheme=ShaleDark
-Name=Shale Dark
+Name=Shale
 shadeSortColumn=true
-BrowserApplication=chromium.desktop
 
 [KDE]
 contrast=4
 LookAndFeelPackage=org.shale.desktop
 widgetStyle=Breeze
-AnimationDurationFactor=0
 
 [WM]
-activeBackground=30,30,30
+activeBackground=20,20,20
 activeBlend=236,236,236
 activeForeground=236,236,236
-inactiveBackground=30,30,30
+inactiveBackground=20,20,20
 inactiveBlend=160,160,160
 inactiveForeground=160,160,160
 
