@@ -46,8 +46,9 @@ SLIDES = [
      "with one click."),
     ("preferences-system-bluetooth", "bluetooth", "Bluetooth built in",
      "Connect headphones, mice, keyboards and game controllers from the panel."),
-    ("applications-games", "input-gaming", "Ready for games",
-     "AMD graphics work out of the box. Get Steam from the Software Manager and start playing."),
+    ("shale-game-panel", "input-gaming", "Game Panel",
+     "Get Steam from the Software Manager, then switch on Game Panel for smooth, "
+     "steady gameplay in every game."),
 ]
 
 # Default keyboard for each language (index into data.KEYBOARDS by label).
@@ -692,8 +693,8 @@ class ReadyPage(Page):
         for key in ("amd", "nvidia", "intel", "generic"):
             self.gpu.addItem(data.GPU_LABELS[key], key)
         self.gpu.setCurrentIndex(self.gpu.findData(detect_gpu()))
-        self.box.addWidget(label("You'll get KDE Plasma with the Software Manager, LibreOffice, VLC, "
-                                 "Gwenview and Chromium, all ready to use.", "muted"))
+        self.box.addWidget(label("You'll get KDE Plasma with the Software Manager, Game Panel, "
+                                 "LibreOffice, VLC, Gwenview and Chromium, all ready to use.", "muted"))
         self.box.addStretch()
 
     def enter(self):
