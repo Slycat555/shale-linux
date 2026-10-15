@@ -165,6 +165,10 @@ class Steam:
                   HOME / ".var/app" / FLATPAK_ID / ".local/share/Steam"):
             if (p / "steamapps/libraryfolders.vdf").exists() and p.resolve() not in found:
                 found.append(p.resolve())
+        # Flatpak Steam's data stays behind after it's uninstalled; only offer it while installed.
+        if any(FLATPAK_ID in str(p) for p in found) and subprocess.run(
+                ["flatpak", "info", FLATPAK_ID], capture_output=True).returncode != 0:
+            found = [p for p in found if FLATPAK_ID not in str(p)]
         return found
 
     @classmethod
@@ -269,11 +273,38 @@ class Steam:
         subprocess.Popen(self._cmd() + ["-silent"], stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL, start_new_session=True)
 
-    def gamescope_available(self):
+    # Flatpak Steam can't use the system's gamescope or MangoHud: it needs Flathub's add-ons,
+    # built for the same runtime version Steam runs on.
+    LAYERS = {"gamescope": "org.freedesktop.Platform.VulkanLayer.gamescope",
+              "MangoHud": "org.freedesktop.Platform.VulkanLayer.MangoHud"}
+
+    def runtime_branch(self):
+        """The Freedesktop runtime branch Flatpak Steam runs on (e.g. 25.08)."""
+        r = subprocess.run(["flatpak", "info", "--show-runtime", FLATPAK_ID], capture_output=True, text=True)
+        return r.stdout.strip().rsplit("/", 1)[-1] if r.returncode == 0 and r.stdout.strip() else None
+
+    def missing_tools(self):
+        """The tools ("gamescope", "MangoHud") this Steam installation can't use yet."""
         if self.flatpak:
-            r = subprocess.run(["flatpak", "list", "--columns=application"], capture_output=True, text=True)
-            return "org.freedesktop.Platform.VulkanLayer.gamescope" in r.stdout
-        return shutil.which("gamescope") is not None
+            branch = self.runtime_branch()
+            r = subprocess.run(["flatpak", "list", "--runtime", "--columns=application,branch"],
+                               capture_output=True, text=True)
+            have = {tuple(line.split("\t")[:2]) for line in r.stdout.splitlines() if "\t" in line}
+            return [name for name, ref in self.LAYERS.items() if (ref, branch) not in have]
+        missing = []
+        if shutil.which("gamescope") is None:
+            missing.append("gamescope")
+        if not any(Path("/usr/share/vulkan/implicit_layer.d").glob("MangoHud*.json")):
+            missing.append("MangoHud")
+        return missing
+
+    def install_command(self, missing):
+        """A command that installs the missing tools, or None where packages are needed."""
+        branch = self.runtime_branch() if self.flatpak else None
+        if not branch:
+            return None
+        return (["flatpak", "install", "-y", "--noninteractive", "flathub"]
+                + [f"{self.LAYERS[name]}//{branch}" for name in missing])
 
     def local_art(self, appid, kind):
         # Newer Steam clients call the cover library_capsule.jpg and the header library_header.jpg.
@@ -1269,6 +1300,13 @@ class MainWindow(QMainWindow):
         lay.addStretch()
         self.gs_warn = Chip()
         lay.addWidget(self.gs_warn)
+        self.tools_button = QPushButton("Install")
+        self.tools_button.setProperty("role", "primary")
+        self.tools_button.setCursor(Qt.PointingHandCursor)
+        self.tools_button.clicked.connect(self._install_tools)
+        self.tools_button.hide()
+        lay.addWidget(self.tools_button)
+        self._tools_proc = None
         self.search = QLineEdit()
         self.search.setPlaceholderText("Search games…")
         self.search.setClearButtonEnabled(True)
@@ -1480,7 +1518,7 @@ class MainWindow(QMainWindow):
             n = len(self.steam.libraries())
             self.subtitle.setText(f"{self.steam.label} · {n} {'library' if n == 1 else 'libraries'}")
             self.subtitle.setToolTip(str(self.steam.root))
-        self.has_gamescope = self.steam.found and self.steam.gamescope_available()
+        self.missing_tools = self.steam.missing_tools() if self.steam.found else []
         self._update_gs_warn()
         ids = [g["appid"] for g in self.games]
         keep = self.current if self.current in ids else (ids[0] if ids else None)
@@ -1494,13 +1532,43 @@ class MainWindow(QMainWindow):
         self._save()
 
     def _update_gs_warn(self):
-        if self.has_gamescope:
+        missing = self.missing_tools
+        if not missing:
             self.gs_warn.hide()
-        else:
-            self.gs_warn.set("GAMESCOPE NOT INSTALLED", T.DANGER)
-            self.gs_warn.setToolTip("flatpak install org.freedesktop.Platform.VulkanLayer.gamescope"
-                                    if self.steam.flatpak else "Install the gamescope package")
-            self.gs_warn.show()
+            self.tools_button.hide()
+            return
+        names = " and ".join(missing)
+        # Without gamescope Game Panel can't do its main job; without MangoHud only the
+        # overlay and FPS cap don't work.
+        self.gs_warn.set(f"{names.upper()} NOT INSTALLED", T.DANGER if "gamescope" in missing else T.NEUTRAL)
+        can_install = self.steam.install_command(missing) is not None
+        self.gs_warn.setToolTip(
+            f"Flatpak Steam needs Flathub's {names} add-on for its runtime" if can_install
+            else f"Install the {' and '.join(m.lower() for m in missing)} package"
+                 + ("s" if len(missing) > 1 else "") + " (Shale includes them)")
+        self.gs_warn.show()
+        self.tools_button.setText("Install")
+        self.tools_button.setEnabled(True)
+        self.tools_button.setVisible(can_install)
+
+    def _install_tools(self):
+        cmd = self.steam.install_command(self.missing_tools)
+        if not cmd or self._tools_proc is not None:
+            return
+        self.tools_button.setText("Installing…")
+        self.tools_button.setEnabled(False)
+        self._tools_proc = QProcess(self)
+        self._tools_proc.finished.connect(self._tools_installed)
+        self._tools_proc.start(cmd[0], cmd[1:])
+
+    def _tools_installed(self, code, _status):
+        output = bytes(self._tools_proc.readAllStandardError()).decode(errors="replace").strip()
+        self._tools_proc = None
+        self.missing_tools = self.steam.missing_tools()
+        self._update_gs_warn()
+        if code != 0 and self.missing_tools:
+            QMessageBox.warning(self, APP_NAME, "The add-ons couldn't be installed."
+                                + (f"\n\n{output.splitlines()[-1]}" if output else ""))
 
     def _is_hook(self, appid, lo):
         return f"gp-run {appid} %command%" in (lo or "")

@@ -127,3 +127,5 @@ qt6-svg
 curl
 flatpak
 gamescope
+mangohud
+lib32-mangohud
