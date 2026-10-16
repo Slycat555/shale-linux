@@ -5,3 +5,10 @@ x-scheme-handler/https=chromium.desktop
 x-scheme-handler/about=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
 application/xhtml+xml=chromium.desktop
+# App installs open in Shale's Software Manager, even when another store
+# (Bazaar, GNOME Software, Discover) is installed and claims these links.
+x-scheme-handler/appstream=shale-software-fp-handler.desktop
+application/vnd.flatpak.ref=shale-software-fp-handler.desktop
+application/vnd.flatpak.repo=shale-software-fp-handler.desktop
+x-scheme-handler/flatpak+https=shale-software-fp-handler.desktop
+x-scheme-handler/flatpak+http=shale-software-fp-handler.desktop
